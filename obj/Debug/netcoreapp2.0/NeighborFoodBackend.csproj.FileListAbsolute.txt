@@ -1,0 +1,11 @@
+C:\Users\Suchu\Documents\Visual Studio 2017\Projects\NeighborFoodBackend\NeighborFoodBackend\bin\Debug\netcoreapp2.0\NeighborFoodBackend.deps.json
+C:\Users\Suchu\Documents\Visual Studio 2017\Projects\NeighborFoodBackend\NeighborFoodBackend\bin\Debug\netcoreapp2.0\NeighborFoodBackend.runtimeconfig.json
+C:\Users\Suchu\Documents\Visual Studio 2017\Projects\NeighborFoodBackend\NeighborFoodBackend\bin\Debug\netcoreapp2.0\NeighborFoodBackend.runtimeconfig.dev.json
+C:\Users\Suchu\Documents\Visual Studio 2017\Projects\NeighborFoodBackend\NeighborFoodBackend\bin\Debug\netcoreapp2.0\NeighborFoodBackend.dll
+C:\Users\Suchu\Documents\Visual Studio 2017\Projects\NeighborFoodBackend\NeighborFoodBackend\bin\Debug\netcoreapp2.0\NeighborFoodBackend.pdb
+C:\Users\Suchu\Documents\Visual Studio 2017\Projects\NeighborFoodBackend\NeighborFoodBackend\obj\Debug\netcoreapp2.0\NeighborFoodBackend.csprojResolveAssemblyReference.cache
+C:\Users\Suchu\Documents\Visual Studio 2017\Projects\NeighborFoodBackend\NeighborFoodBackend\obj\Debug\netcoreapp2.0\NeighborFoodBackend.csproj.CoreCompileInputs.cache
+C:\Users\Suchu\Documents\Visual Studio 2017\Projects\NeighborFoodBackend\NeighborFoodBackend\obj\Debug\netcoreapp2.0\NeighborFoodBackend.AssemblyInfoInputs.cache
+C:\Users\Suchu\Documents\Visual Studio 2017\Projects\NeighborFoodBackend\NeighborFoodBackend\obj\Debug\netcoreapp2.0\NeighborFoodBackend.AssemblyInfo.cs
+C:\Users\Suchu\Documents\Visual Studio 2017\Projects\NeighborFoodBackend\NeighborFoodBackend\obj\Debug\netcoreapp2.0\NeighborFoodBackend.dll
+C:\Users\Suchu\Documents\Visual Studio 2017\Projects\NeighborFoodBackend\NeighborFoodBackend\obj\Debug\netcoreapp2.0\NeighborFoodBackend.pdb
