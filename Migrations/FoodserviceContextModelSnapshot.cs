@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using WebApplication1.Data;
 
-namespace WebApplication1.Migrations
+namespace NeighborFoodBackend.Migrations
 {
     [DbContext(typeof(FoodserviceContext))]
     partial class FoodserviceContextModelSnapshot : ModelSnapshot
@@ -102,7 +102,7 @@ namespace WebApplication1.Migrations
 
             modelBuilder.Entity("FoodService.Models.User", b =>
                 {
-                    b.Property<string>("userID")
+                    b.Property<string>("userUid")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("apartmentID");
@@ -111,7 +111,7 @@ namespace WebApplication1.Migrations
 
                     b.Property<string>("userName");
 
-                    b.HasKey("userID");
+                    b.HasKey("userUid");
 
                     b.ToTable("Users");
                 });

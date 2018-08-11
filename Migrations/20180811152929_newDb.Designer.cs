@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using WebApplication1.Data;
 
-namespace WebApplication1.Migrations
+namespace NeighborFoodBackend.Migrations
 {
     [DbContext(typeof(FoodserviceContext))]
-    [Migration("20180811081834_updatedmodel")]
-    partial class updatedmodel
+    [Migration("20180811152929_newDb")]
+    partial class newDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -103,7 +103,7 @@ namespace WebApplication1.Migrations
 
             modelBuilder.Entity("FoodService.Models.User", b =>
                 {
-                    b.Property<string>("userID")
+                    b.Property<string>("userUid")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("apartmentID");
@@ -112,7 +112,7 @@ namespace WebApplication1.Migrations
 
                     b.Property<string>("userName");
 
-                    b.HasKey("userID");
+                    b.HasKey("userUid");
 
                     b.ToTable("Users");
                 });

@@ -7,8 +7,7 @@ namespace FoodService.Models
     {
         
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public String userID
+        public String userUid
         {
             get;
             set;

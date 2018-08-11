@@ -25,7 +25,7 @@ namespace NeighborBackend.Data
 
         public User GetUser(String id)
         {
-            var Item = _context.Users.FirstOrDefault(b => b.userID == id);
+            var Item = _context.Users.FirstOrDefault(b => b.userUid == id);
             return Item;
         }
 
@@ -50,11 +50,17 @@ namespace NeighborBackend.Data
             return userID;
         }
 
+        public Boolean UserExists(String uid)
+        {
+            var user = _context.Users.Where(x => x.userUid == uid).FirstOrDefault();
+            return user != null;
+        }
+
 
         public long DeleteUser(String id)
         {
             int userID = 0;
-            var user = _context.Users.FirstOrDefault(b => b.userID == id);
+            var user = _context.Users.FirstOrDefault(b => b.userUid == id);
             if (user != null)
             {
                 _context.Users.Remove(user);

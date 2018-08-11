@@ -21,10 +21,9 @@ namespace WebApplication1.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<User> GetAll()
+        public IActionResult Get()
         {
-            return manager.GetAllUsers();
-           
+            return Ok(manager.GetAllUsers());
         }
 
         // GET api/values/5
