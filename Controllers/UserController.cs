@@ -28,9 +28,11 @@ namespace WebApplication1.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public User Get(String id)
+        public IActionResult Get(String id)
         {
-            return manager.GetUser(id);
+            if(manager.GetUser(id)!=null)
+                return Ok(manager.GetUser(id));
+            return NotFound();
         }
 
 
@@ -39,7 +41,13 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public void Post([FromBody]User user)
         {
-            manager.AddUser(user);
+            try
+            {
+                manager.AddUser(user);
+            }
+            catch(Exception){
+               
+            }
                    
         }
 

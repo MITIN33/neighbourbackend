@@ -1,20 +1,13 @@
 ﻿<Properties StartupConfiguration="{082FE9E2-95FD-46CB-83C6-1AA6F9081CF5}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/FoodItemController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Model/Apartment.cs">
     <Files>
-      <File FileName="Data/ServiceManager.cs" Line="261" Column="36" />
-      <File FileName="Controllers/UserController.cs" Line="55" Column="29" />
-      <File FileName="Data/FoodserviceContext.cs" Line="1" Column="21" />
-      <File FileName="appsettings.Development.json" Line="19" Column="1" />
-      <File FileName="appsettings.json" Line="19" Column="1" />
-      <File FileName="Model/User.cs" Line="11" Column="23" />
-      <File FileName="Model/FoodItem.cs" Line="17" Column="17" />
-      <File FileName="Model/Order.cs" Line="8" Column="9" />
-      <File FileName="Data/IDataRepository.cs" Line="1" Column="1" />
-      <File FileName="Controllers/ApartmentController.cs" Line="62" Column="1" />
-      <File FileName="Controllers/FlatController.cs" Line="58" Column="31" />
-      <File FileName="Controllers/FoodItemController.cs" Line="62" Column="1" />
-      <File FileName="Controllers/SellerItemController.cs" Line="37" Column="9" />
-      <File FileName="Controllers/OrderController.cs" Line="1" Column="1" />
+      <File FileName="Controllers/FlatController.cs" Line="39" Column="20" />
+      <File FileName="Data/ServiceManager.cs" Line="171" Column="10" />
+      <File FileName="Controllers/FoodItemController.cs" Line="1" Column="1" />
+      <File FileName="Controllers/UserController.cs" Line="49" Column="16" />
+      <File FileName="Controllers/SellerItemController.cs" Line="1" Column="1" />
+      <File FileName="Model/Flat.cs" Line="21" Column="33" />
+      <File FileName="Model/Apartment.cs" Line="25" Column="17" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

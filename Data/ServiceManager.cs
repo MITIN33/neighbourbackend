@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using FoodService.Models;
 using WebApplication1.Data;
-
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 namespace NeighborBackend.Data
 {
     public class UserManager
@@ -19,8 +20,15 @@ namespace NeighborBackend.Data
 
         public void AddUser(User user)
         {
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            if (UserExists(user.userUid))
+            {
+                throw new Exception("User Already Exists");
+            }
+            else
+            {
+                _context.Users.Add(user);
+                _context.SaveChanges();
+            }
         }
 
         public User GetUser(String id)
@@ -126,6 +134,12 @@ namespace NeighborBackend.Data
             return apartmentID;
         }
 
+        public Boolean ApartmentExists(String id)
+        {
+            var apartment = _context.Apartments.Where(x => x.apartmentID == id).FirstOrDefault();
+            return apartment != null;
+        }
+
 
 
     }
@@ -159,9 +173,12 @@ namespace NeighborBackend.Data
             return Flats;
         }
 
-        public IEnumerable<Flat> GetAllFlatsForApartment(String apartmentID)
+        public List<Flat> GetAllFlatsForApartment(String apartmentID)
         {
-            var Flats = _context.Flats.ToList();
+            var Flats = _context.Flats
+                                .Where(s => s.apartmentID == apartmentID)
+                           .Include("Apartments")
+                                .ToList();
             return Flats;
         }
 
@@ -189,6 +206,12 @@ namespace NeighborBackend.Data
                 flatID = _context.SaveChanges();
             }
             return flatID;
+        }
+
+        public Boolean FlatExists(String id)
+        {
+            var flat = _context.Flats.Where(x => x.flatID == id).FirstOrDefault();
+            return flat != null;
         }
 
     }

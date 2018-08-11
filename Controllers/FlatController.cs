@@ -27,13 +27,20 @@ namespace WebApplication1.Controllers
 
         }
 
-        // GET api/values/5
         [HttpGet("{id}")]
         public Flat Get(String id)
         {
             return manager.GetFlat(id);
         }
 
+
+        [Route("apartments/{id}")]
+        [HttpGet]
+        public List<Flat> GetAllFlatsByApartment(String id)
+        {
+           return manager.GetAllFlatsForApartment(id);
+
+        }
 
 
         // POST api/values

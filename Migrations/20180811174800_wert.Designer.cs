@@ -11,9 +11,10 @@ using WebApplication1.Data;
 namespace NeighborFoodBackend.Migrations
 {
     [DbContext(typeof(FoodserviceContext))]
-    partial class FoodserviceContextModelSnapshot : ModelSnapshot
+    [Migration("20180811174800_wert")]
+    partial class wert
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
