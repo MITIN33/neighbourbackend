@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using WebApplication1.Data;
 
@@ -18,38 +20,100 @@ namespace WebApplication1.Migrations
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("WebApplication1.Model.Item", b =>
+            modelBuilder.Entity("FoodService.Models.Apartment", b =>
                 {
-                    b.Property<long>("StudentId")
+                    b.Property<string>("apartmentID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Address1");
+                    b.Property<string>("apartmentName");
 
-                    b.Property<string>("Address2");
+                    b.HasKey("apartmentID");
 
-                    b.Property<string>("City");
+                    b.ToTable("Apartments");
+                });
 
-                    b.Property<DateTime?>("DateOfBirth");
+            modelBuilder.Entity("FoodService.Models.Flat", b =>
+                {
+                    b.Property<string>("flatID")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime?>("DateOfRegistration");
+                    b.Property<string>("FlatNumber");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("apartmentID");
 
-                    b.Property<string>("FirstName");
+                    b.HasKey("flatID");
 
-                    b.Property<string>("Gender");
+                    b.ToTable("Flats");
+                });
 
-                    b.Property<string>("LastName");
+            modelBuilder.Entity("FoodService.Models.FoodItem", b =>
+                {
+                    b.Property<string>("itemID")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("PhoneNumber");
+                    b.Property<string>("itemDesc");
 
-                    b.Property<string>("State");
+                    b.Property<string>("itemName");
 
-                    b.Property<string>("Zip");
+                    b.HasKey("itemID");
 
-                    b.HasKey("StudentId");
+                    b.ToTable("FoodItems");
+                });
 
-                    b.ToTable("Items");
+            modelBuilder.Entity("FoodService.Models.Order", b =>
+                {
+                    b.Property<string>("orderID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("createTime");
+
+                    b.Property<string>("orderStatus");
+
+                    b.Property<string>("userPlacedBy");
+
+                    b.Property<string>("userPlacedTo");
+
+                    b.HasKey("orderID");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("FoodService.Models.SellerItem", b =>
+                {
+                    b.Property<string>("SellerItemID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("endTime");
+
+                    b.Property<string>("itemID");
+
+                    b.Property<int>("quantity");
+
+                    b.Property<string>("sellerID");
+
+                    b.Property<int>("servedFor");
+
+                    b.Property<DateTime>("startTime");
+
+                    b.HasKey("SellerItemID");
+
+                    b.ToTable("SellerItems");
+                });
+
+            modelBuilder.Entity("FoodService.Models.User", b =>
+                {
+                    b.Property<string>("userID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("apartmentID");
+
+                    b.Property<string>("flatID");
+
+                    b.Property<string>("userName");
+
+                    b.HasKey("userID");
+
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

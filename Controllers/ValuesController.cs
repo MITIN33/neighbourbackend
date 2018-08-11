@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using NeighborBackend.Data;
+using WebApplication1.Data;
 
 namespace WebApplication1.Controllers
 {
@@ -10,9 +12,17 @@ namespace WebApplication1.Controllers
     public class ValuesController : Controller
     {
         // GET api/values
+        FoodItemManager manager;
+
+        public ValuesController(FoodserviceContext context)
+        {
+            manager = new FoodItemManager(context);
+        }
+
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            manager.AddUser(new FoodService.Models.User() { apartmentID = "7865", flatID = "122", userName = "archit" });
             return new string[] { "value1", "value2" };
         }
 
@@ -22,6 +32,15 @@ namespace WebApplication1.Controllers
         {
             return "value";
         }
+
+        // GET api/values/5
+        [HttpGet]
+        [Route("getbyId/{id}")]
+        public string GetByID(int id)
+        {
+            return "12345";
+        }
+
 
         // POST api/values
         [HttpPost]
