@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace NeighborFoodBackend.Migrations
 {
-    public partial class newDb : Migration
+    public partial class newSetup : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,32 +18,6 @@ namespace NeighborFoodBackend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Apartments", x => x.apartmentID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Flats",
-                columns: table => new
-                {
-                    flatID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FlatNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    apartmentID = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Flats", x => x.flatID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FoodItems",
-                columns: table => new
-                {
-                    itemID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    itemDesc = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    itemName = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FoodItems", x => x.itemID);
                 });
 
             migrationBuilder.CreateTable(
@@ -91,13 +65,48 @@ namespace NeighborFoodBackend.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.userUid);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Flats",
+                columns: table => new
+                {
+                    flatID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FlatNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    apartmentID = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Flats", x => x.flatID);
+                    table.ForeignKey(
+                        name: "FK_Flats_Apartments_flatID",
+                        column: x => x.flatID,
+                        principalTable: "Apartments",
+                        principalColumn: "apartmentID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FoodItems",
+                columns: table => new
+                {
+                    itemID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    itemDesc = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    itemName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FoodItems", x => x.itemID);
+                    table.ForeignKey(
+                        name: "FK_FoodItems_Orders_itemID",
+                        column: x => x.itemID,
+                        principalTable: "Orders",
+                        principalColumn: "orderID",
+                        onDelete: ReferentialAction.Cascade);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Apartments");
-
             migrationBuilder.DropTable(
                 name: "Flats");
 
@@ -105,13 +114,16 @@ namespace NeighborFoodBackend.Migrations
                 name: "FoodItems");
 
             migrationBuilder.DropTable(
-                name: "Orders");
-
-            migrationBuilder.DropTable(
                 name: "SellerItems");
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Apartments");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
         }
     }
 }

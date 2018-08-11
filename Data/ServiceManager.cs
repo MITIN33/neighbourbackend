@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using FoodService.Models;
 using WebApplication1.Data;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 namespace NeighborBackend.Data
 {

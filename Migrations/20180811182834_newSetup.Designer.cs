@@ -11,8 +11,8 @@ using WebApplication1.Data;
 namespace NeighborFoodBackend.Migrations
 {
     [DbContext(typeof(FoodserviceContext))]
-    [Migration("20180811152929_newDb")]
-    partial class newDb
+    [Migration("20180811182834_newSetup")]
+    partial class newSetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -115,6 +115,22 @@ namespace NeighborFoodBackend.Migrations
                     b.HasKey("userUid");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("FoodService.Models.Flat", b =>
+                {
+                    b.HasOne("FoodService.Models.Apartment")
+                        .WithMany("Flats")
+                        .HasForeignKey("flatID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("FoodService.Models.FoodItem", b =>
+                {
+                    b.HasOne("FoodService.Models.Order")
+                        .WithMany("foodItem")
+                        .HasForeignKey("itemID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
