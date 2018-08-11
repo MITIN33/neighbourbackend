@@ -17,6 +17,7 @@ namespace FoodService.Models
             get;
             set;
         }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public String itemID

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace FoodService.Models
@@ -35,5 +36,12 @@ namespace FoodService.Models
             get;
             set;
         }
+
+        [ForeignKey("itemID")]
+        public List<FoodItem> foodItem{
+            get;
+            set;
+        }
+
     }
 }

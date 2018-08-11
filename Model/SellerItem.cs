@@ -13,6 +13,7 @@ namespace FoodService.Models
             get;
             set;
         }
+        [ForeignKey("itemID")]
         public String itemID
         {
             get;

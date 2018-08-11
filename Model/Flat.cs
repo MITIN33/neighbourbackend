@@ -18,7 +18,7 @@ namespace FoodService.Models
             get;
             set;
         }
-        [ForeignKey("apartmentID")]
+       
         public String apartmentID
         {
             get;

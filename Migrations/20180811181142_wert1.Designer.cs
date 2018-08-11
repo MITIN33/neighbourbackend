@@ -11,9 +11,10 @@ using WebApplication1.Data;
 namespace NeighborFoodBackend.Migrations
 {
     [DbContext(typeof(FoodserviceContext))]
-    partial class FoodserviceContextModelSnapshot : ModelSnapshot
+    [Migration("20180811181142_wert1")]
+    partial class wert1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,6 +43,8 @@ namespace NeighborFoodBackend.Migrations
                     b.Property<string>("apartmentID");
 
                     b.HasKey("flatID");
+
+                    b.HasIndex("apartmentID");
 
                     b.ToTable("Flats");
                 });
@@ -120,8 +123,7 @@ namespace NeighborFoodBackend.Migrations
                 {
                     b.HasOne("FoodService.Models.Apartment")
                         .WithMany("Flats")
-                        .HasForeignKey("flatID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("apartmentID");
                 });
 
             modelBuilder.Entity("FoodService.Models.FoodItem", b =>

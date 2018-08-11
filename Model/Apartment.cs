@@ -22,7 +22,7 @@ namespace FoodService.Models
             set;
         }
 
-        [ForeignKey("apartmentID")]
+        [ForeignKey("flatID")]
         public ICollection<Flat> Flats { get; set; }
     }
 }

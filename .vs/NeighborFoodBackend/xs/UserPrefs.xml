@@ -1,5 +1,5 @@
 ﻿<Properties StartupConfiguration="{082FE9E2-95FD-46CB-83C6-1AA6F9081CF5}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Model/Apartment.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Model/User.cs">
     <Files>
       <File FileName="Controllers/FlatController.cs" Line="39" Column="20" />
       <File FileName="Data/ServiceManager.cs" Line="171" Column="10" />
@@ -7,7 +7,11 @@
       <File FileName="Controllers/UserController.cs" Line="49" Column="16" />
       <File FileName="Controllers/SellerItemController.cs" Line="1" Column="1" />
       <File FileName="Model/Flat.cs" Line="21" Column="33" />
-      <File FileName="Model/Apartment.cs" Line="25" Column="17" />
+      <File FileName="Model/Apartment.cs" Line="25" Column="36" />
+      <File FileName="Model/FoodItem.cs" Line="20" Column="9" />
+      <File FileName="Model/Order.cs" Line="17" Column="34" />
+      <File FileName="Model/SellerItem.cs" Line="16" Column="30" />
+      <File FileName="Model/User.cs" Line="10" Column="30" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
