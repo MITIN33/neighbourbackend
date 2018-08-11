@@ -4,6 +4,8 @@ using System.Linq;
 using FoodService.Models;
 using WebApplication1.Data;
 using Microsoft.EntityFrameworkCore;
+using NeighborFoodBackend.Model.Entity;
+
 namespace NeighborBackend.Data
 {
     public class UserManager
@@ -326,6 +328,18 @@ namespace NeighborBackend.Data
                 sellerItemID = _context.SaveChanges();
             }
             return sellerItemID;
+        }
+
+        public IEnumerable<SelletItemDetails> GetSellerItemDetail(string id)
+        {
+            var innerJoinQuery =
+            from sellerItem in _context.SellerItems
+            join user in _context.Users on sellerItem.sellerID equals user.userUid
+            join flat in _context.Flats on user.flatID equals flat.flatID
+            join item in _context.FoodItems on sellerItem.itemID equals item.itemID
+            select new SelletItemDetails { useName = user.userName, ItemID = flat.flatID,flatNumber = flat.FlatNumber , itemName = item.itemName  }; //produces flat sequence
+
+            return innerJoinQuery;
         }
     }
 

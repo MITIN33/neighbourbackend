@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FoodService.Models;
 using Microsoft.AspNetCore.Mvc;
 using NeighborBackend.Data;
+using NeighborFoodBackend.Model.Entity;
 using WebApplication1.Data;
 
 namespace WebApplication1.Controllers
@@ -25,6 +26,13 @@ namespace WebApplication1.Controllers
         {
             return manager.GetAllSellerItems();
 
+        }
+
+        [Route("flatlist/{id}")]
+        [HttpGet]
+        public IEnumerable<SelletItemDetails> GetFlatList(String id)
+        {
+            return manager.GetSellerItemDetail(id);
         }
 
         // GET api/values/5
