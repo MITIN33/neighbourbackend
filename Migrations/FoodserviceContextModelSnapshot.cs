@@ -34,14 +34,14 @@ namespace NeighborFoodBackend.Migrations
 
             modelBuilder.Entity("FoodService.Models.Flat", b =>
                 {
-                    b.Property<string>("flatID")
+                    b.Property<string>("FlatNumber")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("FlatNumber");
 
                     b.Property<string>("apartmentID");
 
-                    b.HasKey("flatID");
+                    b.HasKey("FlatNumber");
+
+                    b.HasIndex("apartmentID");
 
                     b.ToTable("Flats");
                 });
@@ -95,7 +95,13 @@ namespace NeighborFoodBackend.Migrations
 
                     b.Property<DateTime>("startTime");
 
+                    b.Property<string>("userUid");
+
                     b.HasKey("SellerItemID");
+
+                    b.HasIndex("itemID");
+
+                    b.HasIndex("userUid");
 
                     b.ToTable("SellerItems");
                 });
@@ -105,13 +111,19 @@ namespace NeighborFoodBackend.Migrations
                     b.Property<string>("userUid")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("apartmentID");
+                    b.Property<string>("flatNumber");
 
-                    b.Property<string>("flatID");
+                    b.Property<string>("fname");
+
+                    b.Property<string>("lname");
+
+                    b.Property<string>("phoneNo");
 
                     b.Property<string>("userName");
 
                     b.HasKey("userUid");
+
+                    b.HasIndex("flatNumber");
 
                     b.ToTable("Users");
                 });
@@ -120,8 +132,7 @@ namespace NeighborFoodBackend.Migrations
                 {
                     b.HasOne("FoodService.Models.Apartment")
                         .WithMany("Flats")
-                        .HasForeignKey("flatID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("apartmentID");
                 });
 
             modelBuilder.Entity("FoodService.Models.FoodItem", b =>
@@ -130,6 +141,24 @@ namespace NeighborFoodBackend.Migrations
                         .WithMany("foodItem")
                         .HasForeignKey("itemID")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("FoodService.Models.SellerItem", b =>
+                {
+                    b.HasOne("FoodService.Models.FoodItem")
+                        .WithMany("SellerItems")
+                        .HasForeignKey("itemID");
+
+                    b.HasOne("FoodService.Models.User")
+                        .WithMany("SellerItems")
+                        .HasForeignKey("userUid");
+                });
+
+            modelBuilder.Entity("FoodService.Models.User", b =>
+                {
+                    b.HasOne("FoodService.Models.Flat")
+                        .WithMany("Users")
+                        .HasForeignKey("flatNumber");
                 });
 #pragma warning restore 612, 618
         }

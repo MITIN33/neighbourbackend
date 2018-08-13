@@ -50,8 +50,8 @@ namespace NeighborBackend.Data
             var userNew = _context.Users.Find(id);
             if (userNew != null)
             {
-                userNew.apartmentID = user.apartmentID;
-                userNew.flatID = user.flatID;
+              
+                userNew.flatNumber = user.flatNumber;
                 userNew.userName = user.userName;
                 userID = _context.SaveChanges();
             }
@@ -162,7 +162,7 @@ namespace NeighborBackend.Data
 
         public Flat GetFlat(String id)
         {
-            var Flat = _context.Flats.FirstOrDefault(b => b.flatID == id);
+            var Flat = _context.Flats.FirstOrDefault(b => b.FlatNumber == id);
             return Flat;
         }
 
@@ -177,7 +177,6 @@ namespace NeighborBackend.Data
         {
             var Flats = _context.Flats
                                 .Where(s => s.apartmentID == apartmentID)
-                           .Include("Apartments")
                                 .ToList();
             return Flats;
         }
@@ -188,7 +187,7 @@ namespace NeighborBackend.Data
             var FlatNew = _context.Flats.Find(id);
             if (FlatNew != null)
             {
-                FlatNew.flatID = Flat.flatID;
+              
                 FlatNew.FlatNumber = Flat.FlatNumber;
                 flatID = _context.SaveChanges();
             }
@@ -199,7 +198,7 @@ namespace NeighborBackend.Data
         public long DeleteFlat(String id)
         {
             int flatID = 0;
-            var Flat = _context.Flats.FirstOrDefault(b => b.flatID == id);
+            var Flat = _context.Flats.FirstOrDefault(b => b.FlatNumber == id);
             if (Flat != null)
             {
                 _context.Flats.Remove(Flat);
@@ -210,7 +209,7 @@ namespace NeighborBackend.Data
 
         public Boolean FlatExists(String id)
         {
-            var flat = _context.Flats.Where(x => x.flatID == id).FirstOrDefault();
+            var flat = _context.Flats.Where(x => x.FlatNumber == id).FirstOrDefault();
             return flat != null;
         }
 
@@ -330,14 +329,15 @@ namespace NeighborBackend.Data
             return sellerItemID;
         }
 
-        public IEnumerable<SelletItemDetails> GetSellerItemDetail(string id)
+        public IEnumerable<SellerItemDetails> GetSellerItemDetail(string id)
         {
+            
             var innerJoinQuery =
             from sellerItem in _context.SellerItems
             join user in _context.Users on sellerItem.sellerID equals user.userUid
-            join flat in _context.Flats on user.flatID equals flat.flatID
+                                       join flat in _context.Flats on user.flatNumber equals flat.FlatNumber
             join item in _context.FoodItems on sellerItem.itemID equals item.itemID
-            select new SelletItemDetails { useName = user.userName, ItemID = flat.flatID,flatNumber = flat.FlatNumber , itemName = item.itemName  }; //produces flat sequence
+                                       select new SellerItemDetails { useName = user.userName, flatNumber = flat.FlatNumber , itemName = item.itemName  }; //produces flat sequence
 
             return innerJoinQuery;
         }

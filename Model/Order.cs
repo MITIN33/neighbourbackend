@@ -21,6 +21,7 @@ namespace FoodService.Models
             set;
         }
 
+
         public String userPlacedBy
         {
             get;
@@ -38,7 +39,7 @@ namespace FoodService.Models
         }
 
         [ForeignKey("itemID")]
-        public List<FoodItem> foodItem{
+        public List<SellerItem> foodItem{
             get;
             set;
         }

@@ -30,7 +30,7 @@ namespace WebApplication1.Controllers
 
         [Route("flatlist/{id}")]
         [HttpGet]
-        public IEnumerable<SelletItemDetails> GetFlatList(String id)
+        public IEnumerable<SellerItemDetails> GetFlatList(String id)
         {
             return manager.GetSellerItemDetail(id);
         }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 namespace FoodService.Models
+            
 {
     public class SellerItem
     {
@@ -13,13 +15,16 @@ namespace FoodService.Models
             get;
             set;
         }
-        [ForeignKey("itemID")]
+       
+       
         public String itemID
         {
             get;
             set;
 
         }
+
+
         public String sellerID
         {
             get;

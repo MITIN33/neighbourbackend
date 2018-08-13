@@ -12536,30 +12536,28 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Suchu\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "/Users/arcagarwal/.nuget/packages/": {},
+    "/usr/local/share/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Suchu\\Documents\\Visual Studio 2017\\Projects\\NeighborFoodBackend\\neighbourbackend\\NeighborFoodBackend.csproj",
+      "projectUniqueName": "/Users/arcagarwal/Projects/neighbourbackend/NeighborFoodBackend.csproj",
       "projectName": "NeighborFoodBackend",
-      "projectPath": "C:\\Users\\Suchu\\Documents\\Visual Studio 2017\\Projects\\NeighborFoodBackend\\neighbourbackend\\NeighborFoodBackend.csproj",
-      "packagesPath": "C:\\Users\\Suchu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Suchu\\Documents\\Visual Studio 2017\\Projects\\NeighborFoodBackend\\neighbourbackend\\obj\\",
+      "projectPath": "/Users/arcagarwal/Projects/neighbourbackend/NeighborFoodBackend.csproj",
+      "packagesPath": "/Users/arcagarwal/.nuget/packages/",
+      "outputPath": "/Users/arcagarwal/Projects/neighbourbackend/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Suchu\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/arcagarwal/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
