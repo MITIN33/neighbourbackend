@@ -11,8 +11,8 @@ using WebApplication1.Data;
 namespace NeighborFoodBackend.Migrations
 {
     [DbContext(typeof(FoodserviceContext))]
-    [Migration("20180813171118_asd2")]
-    partial class asd2
+    [Migration("20180813214339_newdb_fk")]
+    partial class newdb_fk
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,11 +35,14 @@ namespace NeighborFoodBackend.Migrations
 
             modelBuilder.Entity("FoodService.Models.Flat", b =>
                 {
-                    b.Property<string>("FlatNumber");
+                    b.Property<string>("FlatNumber")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("apartmentID");
 
                     b.HasKey("FlatNumber");
+
+                    b.HasIndex("apartmentID");
 
                     b.ToTable("Flats");
                 });
@@ -67,11 +70,17 @@ namespace NeighborFoodBackend.Migrations
 
                     b.Property<string>("orderStatus");
 
+                    b.Property<int>("quantity");
+
+                    b.Property<string>("sellerItemId");
+
                     b.Property<string>("userPlacedBy");
 
                     b.Property<string>("userPlacedTo");
 
                     b.HasKey("orderID");
+
+                    b.HasIndex("sellerItemId");
 
                     b.ToTable("Orders");
                 });
@@ -93,7 +102,13 @@ namespace NeighborFoodBackend.Migrations
 
                     b.Property<DateTime>("startTime");
 
+                    b.Property<string>("userUid");
+
                     b.HasKey("SellerItemID");
+
+                    b.HasIndex("itemID");
+
+                    b.HasIndex("userUid");
 
                     b.ToTable("SellerItems");
                 });
@@ -102,8 +117,6 @@ namespace NeighborFoodBackend.Migrations
                 {
                     b.Property<string>("userUid")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("apartmentID");
 
                     b.Property<string>("flatNumber");
 
@@ -124,16 +137,25 @@ namespace NeighborFoodBackend.Migrations
                 {
                     b.HasOne("FoodService.Models.Apartment")
                         .WithMany("Flats")
-                        .HasForeignKey("FlatNumber")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("apartmentID");
                 });
 
-            modelBuilder.Entity("FoodService.Models.FoodItem", b =>
+            modelBuilder.Entity("FoodService.Models.Order", b =>
                 {
-                    b.HasOne("FoodService.Models.Order")
-                        .WithMany("foodItem")
-                        .HasForeignKey("itemID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("FoodService.Models.SellerItem")
+                        .WithMany("Orders")
+                        .HasForeignKey("sellerItemId");
+                });
+
+            modelBuilder.Entity("FoodService.Models.SellerItem", b =>
+                {
+                    b.HasOne("FoodService.Models.FoodItem")
+                        .WithMany("SellerItems")
+                        .HasForeignKey("itemID");
+
+                    b.HasOne("FoodService.Models.User")
+                        .WithMany("SellerItems")
+                        .HasForeignKey("userUid");
                 });
 #pragma warning restore 612, 618
         }

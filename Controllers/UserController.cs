@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using FoodService.Models;
 using Microsoft.AspNetCore.Mvc;
 using NeighborBackend.Data;
@@ -30,25 +27,37 @@ namespace WebApplication1.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(String id)
         {
-            if(manager.GetUser(id)!=null)
-                return Ok(manager.GetUser(id));
-            return NotFound();
+            try
+            {
+                var user = manager.GetUser(id);
+                if (user != null)
+                {
+                    return Ok(user);
+                }
+                return StatusCode(404,"User not found");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
 
 
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]User user)
+        public IActionResult Post([FromBody]User user)
         {
             try
             {
                 manager.AddUser(user);
+                return StatusCode(201);
             }
-            catch(Exception){
-               
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
             }
-                   
+
         }
 
         // PUT api/values/5

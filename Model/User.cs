@@ -43,6 +43,9 @@ namespace FoodService.Models
             get;
             set;
         }
+
+        public String apartmentID { get; set; }
+
         public ICollection<SellerItem> SellerItems { get; set; }
 
     }

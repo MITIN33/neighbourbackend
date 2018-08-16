@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FoodService.Models;
 using Microsoft.AspNetCore.Mvc;
 using NeighborBackend.Data;
+using NeighborFoodBackend;
 using WebApplication1.Data;
 
 namespace WebApplication1.Controllers
@@ -21,10 +22,9 @@ namespace WebApplication1.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<FoodItem> GetAll()
+        public IActionResult GetAll()
         {
-            return manager.GetAllFoodItems();
-
+            return Ok(manager.GetAllFoodItems());
         }
 
         // GET api/values/5

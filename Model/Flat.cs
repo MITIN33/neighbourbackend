@@ -19,6 +19,5 @@ namespace FoodService.Models
             get;
             set;
         }
-        public ICollection<User> Users { get; set; }
     }
 }

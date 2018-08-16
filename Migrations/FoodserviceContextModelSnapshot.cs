@@ -69,11 +69,17 @@ namespace NeighborFoodBackend.Migrations
 
                     b.Property<string>("orderStatus");
 
+                    b.Property<int>("quantity");
+
+                    b.Property<string>("sellerItemId");
+
                     b.Property<string>("userPlacedBy");
 
                     b.Property<string>("userPlacedTo");
 
                     b.HasKey("orderID");
+
+                    b.HasIndex("sellerItemId");
 
                     b.ToTable("Orders");
                 });
@@ -111,6 +117,8 @@ namespace NeighborFoodBackend.Migrations
                     b.Property<string>("userUid")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("apartmentID");
+
                     b.Property<string>("flatNumber");
 
                     b.Property<string>("fname");
@@ -123,8 +131,6 @@ namespace NeighborFoodBackend.Migrations
 
                     b.HasKey("userUid");
 
-                    b.HasIndex("flatNumber");
-
                     b.ToTable("Users");
                 });
 
@@ -135,12 +141,11 @@ namespace NeighborFoodBackend.Migrations
                         .HasForeignKey("apartmentID");
                 });
 
-            modelBuilder.Entity("FoodService.Models.FoodItem", b =>
+            modelBuilder.Entity("FoodService.Models.Order", b =>
                 {
-                    b.HasOne("FoodService.Models.Order")
-                        .WithMany("foodItem")
-                        .HasForeignKey("itemID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("FoodService.Models.SellerItem")
+                        .WithMany("Orders")
+                        .HasForeignKey("sellerItemId");
                 });
 
             modelBuilder.Entity("FoodService.Models.SellerItem", b =>
@@ -152,13 +157,6 @@ namespace NeighborFoodBackend.Migrations
                     b.HasOne("FoodService.Models.User")
                         .WithMany("SellerItems")
                         .HasForeignKey("userUid");
-                });
-
-            modelBuilder.Entity("FoodService.Models.User", b =>
-                {
-                    b.HasOne("FoodService.Models.Flat")
-                        .WithMany("Users")
-                        .HasForeignKey("flatNumber");
                 });
 #pragma warning restore 612, 618
         }

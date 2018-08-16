@@ -27,7 +27,7 @@ namespace FoodService.Models
             set;
         }
 
+        public ICollection<SellerItem> SellerItems { get; set; }
 
-      
     }
 }

@@ -38,11 +38,10 @@ namespace FoodService.Models
             set;
         }
 
-        [ForeignKey("itemID")]
-        public List<SellerItem> foodItem{
-            get;
-            set;
-        }
+        [ForeignKey("SellerItem")]
+        public String sellerItemId { get; set; }
+
+        public int quantity { get; set; }
 
     }
 }

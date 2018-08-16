@@ -5,6 +5,7 @@ using FoodService.Models;
 using WebApplication1.Data;
 using Microsoft.EntityFrameworkCore;
 using NeighborFoodBackend.Model.Entity;
+using System.Data.SqlClient;
 
 namespace NeighborBackend.Data
 {
@@ -40,8 +41,19 @@ namespace NeighborBackend.Data
 
         public IEnumerable<User> GetAllUsers()
         {
-            var Users = _context.Users.ToList();
-            return Users;
+            try
+            {
+                var Users = _context.Users.ToList();
+                return Users;
+            }
+            catch(SqlException sq)
+            {
+                throw new Exception(sq.Message);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public long UpdateUser(String id, User user)
@@ -233,7 +245,7 @@ namespace NeighborBackend.Data
 
         public FoodItem GetFoodItem(String id)
         {
-            var FoodItem = _context.FoodItems.FirstOrDefault(b => b.itemID == id);
+            var FoodItem = _context.FoodItems.Where(b => b.itemID == id).FirstOrDefault();
             return FoodItem;
         }
 
@@ -268,6 +280,11 @@ namespace NeighborBackend.Data
                 foodItemID = _context.SaveChanges();
             }
             return foodItemID;
+        }
+
+        internal object GetAllFlats()
+        {
+            throw new NotImplementedException();
         }
     }
     public class SellerItemManager

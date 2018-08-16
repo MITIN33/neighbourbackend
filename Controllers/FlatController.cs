@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FoodService.Models;
 using Microsoft.AspNetCore.Mvc;
 using NeighborBackend.Data;
+using NeighborFoodBackend;
 using WebApplication1.Data;
 
 namespace WebApplication1.Controllers
@@ -21,9 +22,9 @@ namespace WebApplication1.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Flat> GetAll()
+        public IActionResult GetAll()
         {
-            return manager.GetAllFlats();
+            return Ok(manager.GetAllFlats());
 
         }
 

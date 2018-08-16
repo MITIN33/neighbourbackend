@@ -16,7 +16,7 @@ namespace FoodService.Models
             set;
         }
        
-       
+        [ForeignKey("FoodItem")]
         public String itemID
         {
             get;
@@ -24,7 +24,7 @@ namespace FoodService.Models
 
         }
 
-
+        [ForeignKey("User")]
         public String sellerID
         {
             get;
@@ -51,5 +51,7 @@ namespace FoodService.Models
             get;
             set;
         }
+
+        public ICollection<Order> Orders { get; set; }
     }
 }
