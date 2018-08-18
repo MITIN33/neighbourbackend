@@ -33,5 +33,6 @@
     <Compile Remove="Migrations\20180813165800_asd.Designer.cs" />
     <Compile Remove="Migrations\20180813170948_asd2.Designer.cs" />
     <Compile Remove="Migrations\20180813211403_newdb.cs" />
+    <Compile Remove="Migrations\20180817210044_new.cs" />
   </ItemGroup>
 </Project>

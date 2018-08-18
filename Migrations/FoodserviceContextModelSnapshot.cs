@@ -95,8 +95,6 @@ namespace NeighborFoodBackend.Migrations
                     b.Property<string>("SellerItemID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("endTime");
-
                     b.Property<string>("flatID");
 
                     b.Property<bool>("isAvailable");
@@ -111,11 +109,11 @@ namespace NeighborFoodBackend.Migrations
 
                     b.Property<int>("servedFor");
 
-                    b.Property<DateTime>("startTime");
-
                     b.Property<string>("userUid");
 
                     b.HasKey("SellerItemID");
+
+                    b.HasIndex("flatID");
 
                     b.HasIndex("itemID");
 
@@ -174,6 +172,10 @@ namespace NeighborFoodBackend.Migrations
 
             modelBuilder.Entity("FoodService.Models.SellerItem", b =>
                 {
+                    b.HasOne("FoodService.Models.Flat")
+                        .WithMany("sellerItems")
+                        .HasForeignKey("flatID");
+
                     b.HasOne("FoodService.Models.FoodItem")
                         .WithMany("SellerItems")
                         .HasForeignKey("itemID");

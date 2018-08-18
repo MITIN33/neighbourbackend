@@ -41,16 +41,7 @@ namespace FoodService.Models
             get;
             set;
         }
-        public DateTime startTime
-        {
-            get;
-            set;
-        }
-        public DateTime endTime
-        {
-            get;
-            set;
-        }
+       
         public float price { get; set; }
 
         public Boolean isAvailable { get; set; }

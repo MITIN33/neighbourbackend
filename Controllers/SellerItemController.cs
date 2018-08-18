@@ -52,11 +52,34 @@ namespace WebApplication1.Controllers
             manager.UpdateSellerItem(id, sellerItem);
         }
 
+        // PUT api/values/5
+        [HttpPut("details/{id}")]
+        public void Put(String id, [FromBody]SellerDetails sellerDetails)
+        {
+            manager.UpdateSellerItemDetails(id, sellerDetails);
+        }
+
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(String id)
         {
             manager.DeleteSellerItem(id);
+        }
+
+        [Route("details/{id}")]
+        [HttpGet]
+        public IEnumerable<SellerDetails> GetSellerDetails(String id)
+        {
+            return manager.GetSellerDetails(id);
+        }
+
+
+        [Route("details")]
+        [HttpPost]
+        public void Post([FromBody]SellerDetails sellerFlat)
+        {
+            manager.AddSellerItemDetails(sellerFlat);
+
         }
     }
 }

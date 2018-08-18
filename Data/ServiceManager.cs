@@ -331,6 +331,44 @@ namespace NeighborBackend.Data
             _context.SaveChanges();
         }
 
+        public void AddSellerItemDetails(SellerDetails sellerDetails)
+        {
+            var foodItem = _context.FoodItems.Find(sellerDetails.itemID);
+            String guid = Guid.NewGuid().ToString();
+            String itemIDNew;
+            if (foodItem == null)
+            {
+                itemIDNew = guid;
+                FoodItem fI = new FoodItem
+                {
+                    itemDesc = sellerDetails.itemDesc,
+                    itemName = sellerDetails.itemName,
+                    itemID = guid
+                };
+                _context.FoodItems.Add(fI);
+            }
+            else{
+                itemIDNew = sellerDetails.itemID;
+            }
+
+            SellerItem sellerItem = new SellerItem
+            {
+                sellerID = sellerDetails.sellerID,
+                isAvailable = sellerDetails.isAvailable,
+                price = sellerDetails.price,
+                quantity = sellerDetails.quantity,
+                servedFor = sellerDetails.servedFor,
+                flatID = sellerDetails.flatID , 
+                itemID   = itemIDNew              
+
+            };
+            _context.SellerItems.Add(sellerItem);
+            
+           
+           
+            _context.SaveChanges();
+        }
+
         public SellerItem GetSellerItem(String id)
         {
             var SellerItem = _context.SellerItems.FirstOrDefault(b => b.SellerItemID == id);
@@ -353,14 +391,30 @@ namespace NeighborBackend.Data
                 sellerItemNew.sellerID = SellerItem.sellerID;
                 sellerItemNew.servedFor = SellerItem.servedFor;
                 sellerItemNew.quantity = SellerItem.quantity;
-                sellerItemNew.endTime = SellerItem.endTime;
+               
                 sellerItemNew.itemID = SellerItem.itemID;
-                sellerItemNew.startTime = SellerItem.startTime;
+               
                 sellerItemID = _context.SaveChanges();
             }
             return sellerItemID;
         }
 
+        public long UpdateSellerItemDetails(String id, SellerDetails sellerDetails)
+        {
+            int sellerItemID = 0;
+            var sellerItemNew = _context.SellerItems.Find(id);
+            if (sellerItemNew != null)
+            {
+                sellerItemNew.sellerID = sellerDetails.sellerID;
+                sellerItemNew.servedFor = sellerDetails.servedFor;
+                sellerItemNew.quantity = sellerDetails.quantity;
+                sellerItemNew.price = sellerDetails.price;
+                sellerItemNew.isAvailable = sellerDetails.isAvailable
+                sellerItemNew.itemID = sellerDetails.itemID;
+                sellerItemID = _context.SaveChanges();
+            }
+            return sellerItemID;
+        }
 
         public long DeleteSellerItem(String id)
         {
@@ -372,6 +426,28 @@ namespace NeighborBackend.Data
                 sellerItemID = _context.SaveChanges();
             }
             return sellerItemID;
+        }
+
+        public IEnumerable<SellerDetails> GetSellerDetails(String sellerID)
+        {
+            var innerJoinQuery =
+            from sellerItem in _context.SellerItems
+            join item in _context.FoodItems on sellerItem.itemID equals item.itemID
+                                           where sellerItem.sellerID == sellerID
+                                       select new SellerDetails
+            {
+                isAvailable = sellerItem.isAvailable,
+                itemID = sellerItem.itemID,
+                itemName = item.itemName,
+                quantity = sellerItem.quantity,
+                servedFor = sellerItem.servedFor,
+                sellerID = sellerItem.sellerID,
+                price = sellerItem.price,
+                                  flatID = sellerItem.flatID
+            }; //produces flat sequence
+
+            return innerJoinQuery;
+
         }
 
 
