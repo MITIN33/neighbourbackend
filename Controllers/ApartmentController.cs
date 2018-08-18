@@ -36,12 +36,12 @@ namespace WebApplication1.Controllers
         }
 
         // GET api/values/5
-       /* [Route("flats/{apartmentID}")]
+        [Route("{apartmentID}/user/{userID}")]
         [HttpGet]
-        public IEnumerable<SellerItemDetails> GetSellerItemDetailsByApartmentAndUser(String apartmentID)
+        public IEnumerable<SellerItemDetails> GetSellerItemDetailsByApartmentAndUser(String apartmentID,String userID)
         {
-            return manager.GetSellerItemDetailsByApartmentAndUser(apartmentID);
-        }*/
+            return manager.GetSellerItemDetailsByApartmentAndUser(apartmentID,userID);
+        }
 
 
 

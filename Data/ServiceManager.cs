@@ -133,22 +133,41 @@ namespace NeighborBackend.Data
             return apartmentID;
         }
 
-       /* public IEnumerable<SellerItemDetails> GetSellerItemDetailsByApartmentAndUser(String apartmentID)
+      
+
+        public IEnumerable<SellerItemDetails> GetSellerItemDetailsByApartmentAndUser(String apartmentID, String userId)
         {
-            
-            var innerJoinQuery =
-            from sellerItem in _context.SellerItems
-            join user in _context.Users on sellerItem.sellerID equals user.userUid
-                                       join flat in _context.Flats on user.flatID equals flat.FlatID
-                                       join apartment in _context.Apartments on flat.apartmentID equals apartment.apartmentID
-            join item in _context.FoodItems on sellerItem.itemID equals item.itemID
-                                           where apartment.apartmentID == apartmentID group flat.FlatID by c.Country into g
-                                                     
-                                       select new SellerItemDetails { itemID = item.itemID, flatNumber = flat.FlatNumber, itemName = item.itemName,rating=user.rating }; //produces flat sequence
+            List<SellerItemDetails> sellerItemDetails = new List<SellerItemDetails>();
+            var flatList = _context.Flats.Where(x => x.apartmentID == apartmentID).ToList();
+            foreach (var item in flatList)
+            {
+                var users = _context.Users.Where(x => x.userUid == userId).FirstOrDefault();
+                SellerItemDetails sellerItem = new SellerItemDetails()
+                {
+                   FoodItems = getSellerItemsForFlat(item.FlatID).ToList(),
+                    flatNumber = item.FlatNumber,
+                    rating = users.rating,
+                    sellerName = users.fname +" "+users.lname,
+                    SellerId =userId
 
-            return innerJoinQuery;
-        }*/
+                };
+                sellerItemDetails.Add(sellerItem);
+            }
 
+            return sellerItemDetails;
+        }
+        
+
+        public IEnumerable<FoodItem> getSellerItemsForFlat(String flatId)
+        {
+            var foods = from sellerItem in _context.SellerItems 
+                                                   join food in _context.FoodItems on sellerItem.itemID equals food.itemID
+                                                       where sellerItem.flatID  == flatId
+                                                   select new FoodItem{ itemName = food.itemName , itemID = food.itemID};
+
+            return foods;
+
+        }
 
         public long DeleteApartment(String id)
         {
