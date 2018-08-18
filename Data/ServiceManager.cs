@@ -409,7 +409,7 @@ namespace NeighborBackend.Data
                 sellerItemNew.servedFor = sellerDetails.servedFor;
                 sellerItemNew.quantity = sellerDetails.quantity;
                 sellerItemNew.price = sellerDetails.price;
-                sellerItemNew.isAvailable = sellerDetails.isAvailable
+                sellerItemNew.isAvailable = sellerDetails.isAvailable;
                 sellerItemNew.itemID = sellerDetails.itemID;
                 sellerItemID = _context.SaveChanges();
             }
