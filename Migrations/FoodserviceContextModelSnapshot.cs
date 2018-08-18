@@ -34,12 +34,14 @@ namespace NeighborFoodBackend.Migrations
 
             modelBuilder.Entity("FoodService.Models.Flat", b =>
                 {
-                    b.Property<string>("FlatNumber")
+                    b.Property<string>("FlatID")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("FlatNumber");
 
                     b.Property<string>("apartmentID");
 
-                    b.HasKey("FlatNumber");
+                    b.HasKey("FlatID");
 
                     b.HasIndex("apartmentID");
 
@@ -77,9 +79,13 @@ namespace NeighborFoodBackend.Migrations
 
                     b.Property<string>("userPlacedTo");
 
+                    b.Property<string>("userUid");
+
                     b.HasKey("orderID");
 
                     b.HasIndex("sellerItemId");
+
+                    b.HasIndex("userUid");
 
                     b.ToTable("Orders");
                 });
@@ -91,7 +97,13 @@ namespace NeighborFoodBackend.Migrations
 
                     b.Property<DateTime>("endTime");
 
+                    b.Property<string>("flatID");
+
+                    b.Property<bool>("isAvailable");
+
                     b.Property<string>("itemID");
+
+                    b.Property<float>("price");
 
                     b.Property<int>("quantity");
 
@@ -119,7 +131,7 @@ namespace NeighborFoodBackend.Migrations
 
                     b.Property<string>("apartmentID");
 
-                    b.Property<string>("flatNumber");
+                    b.Property<string>("flatID");
 
                     b.Property<string>("fname");
 
@@ -127,9 +139,17 @@ namespace NeighborFoodBackend.Migrations
 
                     b.Property<string>("phoneNo");
 
+                    b.Property<float>("rating");
+
+                    b.Property<string>("status");
+
                     b.Property<string>("userName");
 
                     b.HasKey("userUid");
+
+                    b.HasIndex("apartmentID");
+
+                    b.HasIndex("flatID");
 
                     b.ToTable("Users");
                 });
@@ -146,6 +166,10 @@ namespace NeighborFoodBackend.Migrations
                     b.HasOne("FoodService.Models.SellerItem")
                         .WithMany("Orders")
                         .HasForeignKey("sellerItemId");
+
+                    b.HasOne("FoodService.Models.User")
+                        .WithMany("Orders")
+                        .HasForeignKey("userUid");
                 });
 
             modelBuilder.Entity("FoodService.Models.SellerItem", b =>
@@ -157,6 +181,17 @@ namespace NeighborFoodBackend.Migrations
                     b.HasOne("FoodService.Models.User")
                         .WithMany("SellerItems")
                         .HasForeignKey("userUid");
+                });
+
+            modelBuilder.Entity("FoodService.Models.User", b =>
+                {
+                    b.HasOne("FoodService.Models.Apartment")
+                        .WithMany("Users")
+                        .HasForeignKey("apartmentID");
+
+                    b.HasOne("FoodService.Models.Flat")
+                        .WithMany("Users")
+                        .HasForeignKey("flatID");
                 });
 #pragma warning restore 612, 618
         }

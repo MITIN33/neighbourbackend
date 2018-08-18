@@ -51,6 +51,12 @@ namespace FoodService.Models
             get;
             set;
         }
+        public float price { get; set; }
+
+        public Boolean isAvailable { get; set; }
+
+        [ForeignKey("Flat")]
+        public String flatID { get; set; }
 
         public ICollection<Order> Orders { get; set; }
     }

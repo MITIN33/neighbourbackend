@@ -6,6 +6,7 @@ using FoodService.Models;
 using Microsoft.AspNetCore.Mvc;
 using NeighborBackend.Data;
 using WebApplication1.Data;
+using NeighborFoodBackend.Model.Entity;
 
 namespace WebApplication1.Controllers
 {
@@ -33,6 +34,15 @@ namespace WebApplication1.Controllers
         {
             return manager.GetApartment(id);
         }
+
+        // GET api/values/5
+        [Route("flats/{apartmentID}")]
+        [HttpGet]
+        public IEnumerable<SellerItemDetails> GetSellerItemDetailsByApartmentAndUser(String apartmentID)
+        {
+            return manager.GetSellerItemDetailsByApartmentAndUser(apartmentID);
+        }
+
 
 
 

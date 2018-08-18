@@ -20,8 +20,8 @@ namespace FoodService.Models
             set;
         }
 
-       
-        public String flatNumber
+        [ForeignKey("Flat")]
+        public String flatID
         {
             get;
             set;
@@ -43,10 +43,17 @@ namespace FoodService.Models
             get;
             set;
         }
+        public float rating { get; set; }
 
+        public String status { get; set; }
+
+
+        [ForeignKey("Apartment")]
         public String apartmentID { get; set; }
 
         public ICollection<SellerItem> SellerItems { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
 
     }
 }

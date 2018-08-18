@@ -21,17 +21,21 @@ namespace FoodService.Models
             set;
         }
 
-
+        [ForeignKey("User")]
         public String userPlacedBy
         {
             get;
             set;
         }
+
+        [ForeignKey("User")]
         public String userPlacedTo
         {
             get;
             set;
         }
+
+       
         public DateTime createTime
         {
             get;

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using NeighborBackend.Data;
 using NeighborFoodBackend;
 using WebApplication1.Data;
+using NeighborFoodBackend.Model.Entity;
 
 namespace WebApplication1.Controllers
 {
@@ -43,6 +44,14 @@ namespace WebApplication1.Controllers
 
         }
 
+
+        [Route("seller/{flatID}")]
+        [HttpGet]
+        public IEnumerable<SellerFlat> GetSellerItemsByFlat(String flatID)
+        {
+            return manager.GetSellerItemsByFlat(flatID);
+
+        }
 
         // POST api/values
         [HttpPost]

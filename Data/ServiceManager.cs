@@ -63,7 +63,7 @@ namespace NeighborBackend.Data
             if (userNew != null)
             {
               
-                userNew.flatNumber = user.flatNumber;
+                userNew.flatID = user.flatID;
                 userNew.userName = user.userName;
                 userID = _context.SaveChanges();
             }
@@ -133,6 +133,22 @@ namespace NeighborBackend.Data
             return apartmentID;
         }
 
+        public IEnumerable<SellerItemDetails> GetSellerItemDetailsByApartmentAndUser(String apartmentID)
+        {
+            
+            var innerJoinQuery =
+            from sellerItem in _context.SellerItems
+            join user in _context.Users on sellerItem.sellerID equals user.userUid
+                                       join flat in _context.Flats on user.flatID equals flat.FlatID
+                                       join apartment in _context.Apartments on flat.apartmentID equals apartment.apartmentID
+            join item in _context.FoodItems on sellerItem.itemID equals item.itemID
+                                           where apartment.apartmentID == apartmentID
+                                                     
+                                       select new SellerItemDetails { itemID = item.itemID, flatNumber = flat.FlatNumber, itemName = item.itemName,rating=user.rating }; //produces flat sequence
+
+            return innerJoinQuery;
+        }
+
 
         public long DeleteApartment(String id)
         {
@@ -185,6 +201,18 @@ namespace NeighborBackend.Data
             return Flats;
         }
 
+
+        public IEnumerable<SellerFlat> GetSellerItemsByFlat(String flatID){
+            var innerJoinQuery =
+            from sellerItem in _context.SellerItems
+            join item in _context.FoodItems on sellerItem.itemID equals item.itemID
+            where sellerItem.flatID == flatID
+                                       select new SellerFlat {isAvailable = sellerItem.isAvailable , itemID = sellerItem.itemID,itemName = item.itemName,quantity=sellerItem.quantity,
+                                                                                                                                                                            servedFor = sellerItem.servedFor,sellerID=sellerItem.sellerID,price=sellerItem.price}; //produces flat sequence
+            
+            return innerJoinQuery;
+            
+        }
         public List<Flat> GetAllFlatsForApartment(String apartmentID)
         {
             var Flats = _context.Flats
@@ -346,18 +374,7 @@ namespace NeighborBackend.Data
             return sellerItemID;
         }
 
-        public IEnumerable<SellerItemDetails> GetSellerItemDetail(string id)
-        {
-            
-            var innerJoinQuery =
-            from sellerItem in _context.SellerItems
-            join user in _context.Users on sellerItem.sellerID equals user.userUid
-                                       join flat in _context.Flats on user.flatNumber equals flat.FlatNumber
-            join item in _context.FoodItems on sellerItem.itemID equals item.itemID
-                                       select new SellerItemDetails { useName = user.userName, flatNumber = flat.FlatNumber , itemName = item.itemName  }; //produces flat sequence
 
-            return innerJoinQuery;
-        }
     }
 
     public class OrderManager

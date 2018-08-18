@@ -6,7 +6,17 @@ namespace FoodService.Models
 {
     public class Flat
     {
+       
+
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public String FlatID
+        {
+            get;
+            set;
+        }
+
+
         public String FlatNumber
         {
             get;
@@ -19,5 +29,8 @@ namespace FoodService.Models
             get;
             set;
         }
+
+        public ICollection<User> Users { get; set; }
+        public ICollection<SellerItem> sellerItems { get; set; }
     }
 }

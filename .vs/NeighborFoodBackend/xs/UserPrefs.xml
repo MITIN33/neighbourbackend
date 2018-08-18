@@ -1,14 +1,16 @@
 ﻿<Properties StartupConfiguration="{082FE9E2-95FD-46CB-83C6-1AA6F9081CF5}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Model/Flat.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Data/ServiceManager.cs">
     <Files>
-      <File FileName="Model/Apartment.cs" Line="26" Column="9" />
-      <File FileName="Model/Flat.cs" Line="16" Column="34" />
-      <File FileName="Migrations/20180813172451_asd3.cs" Line="1" Column="1" />
-      <File FileName="Model/User.cs" Line="42" Column="10" />
-      <File FileName="Model/FoodItem.cs" Line="29" Column="51" />
-      <File FileName="Model/SellerItem.cs" Line="27" Column="26" />
-      <File FileName="Data/ServiceManager.cs" Line="53" Column="15" />
-      <File FileName="Model/Order.cs" Line="41" Column="29" />
+      <File FileName="Controllers/ApartmentController.cs" Line="41" Column="45" />
+      <File FileName="Model/Entity/SellerItemDetails.cs" Line="10" Column="29" />
+      <File FileName="Model/User.cs" Line="54" Column="51" />
+      <File FileName="Model/SellerItem.cs" Line="58" Column="26" />
+      <File FileName="Model/Flat.cs" Line="34" Column="51" />
+      <File FileName="Model/Entity/SellerFlat.cs" Line="8" Column="24" />
+      <File FileName="Data/ServiceManager.cs" Line="145" Column="86" />
+      <File FileName="Model/FoodItem.cs" Line="1" Column="1" />
+      <File FileName="Model/Order.cs" Line="24" Column="29" />
+      <File FileName="Controllers/SellerItemController.cs" Line="31" Column="8" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

@@ -14,6 +14,7 @@ namespace FoodService.Models
             set;
 
         }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public String apartmentID
@@ -23,6 +24,7 @@ namespace FoodService.Models
         }
 
         public ICollection<Flat> Flats { get; set; }
+        public ICollection<User> Users { get; set; }
 
     }
 }

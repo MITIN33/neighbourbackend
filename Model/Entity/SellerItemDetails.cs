@@ -7,12 +7,11 @@ namespace NeighborFoodBackend.Model.Entity
 {
     public class SellerItemDetails
     {
-        public String ItemID { get; set; }
-        public String useName { get; set; }
+        public List<FoodItem> itemIDs { get; set; }
         public String flatNumber { get; set; }
-        public String itemName { get; set; }
-        public String apartmentName { get; set; }
-        public String apartmentId { get; set; }
+        public float rating { get; set; }
+
+
 
     }
 }

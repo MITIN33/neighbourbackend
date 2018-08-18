@@ -28,14 +28,7 @@ namespace WebApplication1.Controllers
 
         }
 
-        [Route("flatlist/{id}")]
-        [HttpGet]
-        public IEnumerable<SellerItemDetails> GetFlatList(String id)
-        {
-            return manager.GetSellerItemDetail(id);
-        }
-
-        // GET api/values/5
+       // GET api/values/5
         [HttpGet("{id}")]
         public SellerItem Get(String id)
         {
