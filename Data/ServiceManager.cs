@@ -133,7 +133,7 @@ namespace NeighborBackend.Data
             return apartmentID;
         }
 
-        public IEnumerable<SellerItemDetails> GetSellerItemDetailsByApartmentAndUser(String apartmentID)
+       /* public IEnumerable<SellerItemDetails> GetSellerItemDetailsByApartmentAndUser(String apartmentID)
         {
             
             var innerJoinQuery =
@@ -142,12 +142,12 @@ namespace NeighborBackend.Data
                                        join flat in _context.Flats on user.flatID equals flat.FlatID
                                        join apartment in _context.Apartments on flat.apartmentID equals apartment.apartmentID
             join item in _context.FoodItems on sellerItem.itemID equals item.itemID
-                                           where apartment.apartmentID == apartmentID
+                                           where apartment.apartmentID == apartmentID group flat.FlatID by c.Country into g
                                                      
                                        select new SellerItemDetails { itemID = item.itemID, flatNumber = flat.FlatNumber, itemName = item.itemName,rating=user.rating }; //produces flat sequence
 
             return innerJoinQuery;
-        }
+        }*/
 
 
         public long DeleteApartment(String id)
