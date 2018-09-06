@@ -378,7 +378,8 @@ namespace NeighborBackend.Data
                 quantity = sellerDetails.quantity,
                 servedFor = sellerDetails.servedFor,
                 flatID = sellerDetails.flatID , 
-                itemID   = itemIDNew              
+                itemID   = itemIDNew,
+                itemDesc = sellerDetails.itemDesc
 
             };
             _context.SellerItems.Add(sellerItem);
