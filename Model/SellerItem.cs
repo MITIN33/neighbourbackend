@@ -42,7 +42,7 @@ namespace FoodService.Models
             set;
         }
                 
-        public int description
+        public int itemDesc
         {
             get;
             set;
