@@ -12,5 +12,6 @@ namespace NeighborFoodBackend.Model.Entity
         public float price { get; set; }
         public String flatID { get; set; }
         public Boolean isAvailable { get; set; }
+        public String sellerItemID { get; set; }
     }
 }

@@ -461,6 +461,7 @@ namespace NeighborBackend.Data
                 quantity = sellerItem.quantity,
                 servedFor = sellerItem.servedFor,
                 sellerID = sellerItem.sellerID,
+                sellerItemID = sellerItem.SellerItemID,
                 price = sellerItem.price,
                 flatID = sellerItem.flatID,
                 itemDesc = sellerItem.itemDesc
