@@ -42,7 +42,7 @@ namespace FoodService.Models
             set;
         }
                 
-        public int itemDesc
+        public String itemDesc
         {
             get;
             set;
