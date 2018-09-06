@@ -352,7 +352,7 @@ namespace NeighborBackend.Data
 
         public void AddSellerItemDetails(SellerDetails sellerDetails)
         {
-            var foodItem = _context.FoodItems.Find(sellerDetails.itemID);
+            /*var foodItem =  _context.FoodItems.Where(x=> x.itemName == sellerDetails.itemName);
             String guid = Guid.NewGuid().ToString();
             String itemIDNew;
             if (foodItem == null)
@@ -368,7 +368,7 @@ namespace NeighborBackend.Data
             }
             else{
                 itemIDNew = sellerDetails.itemID;
-            }
+            }*/
 
             SellerItem sellerItem = new SellerItem
             {
@@ -378,7 +378,8 @@ namespace NeighborBackend.Data
                 quantity = sellerDetails.quantity,
                 servedFor = sellerDetails.servedFor,
                 flatID = sellerDetails.flatID , 
-                itemID   = itemIDNew,
+                itemID   = Guid.NewGuid().ToString(),
+                itemName = sellerDetails.itemName,
                 itemDesc = sellerDetails.itemDesc
 
             };
@@ -451,19 +452,18 @@ namespace NeighborBackend.Data
         public IEnumerable<SellerDetails> GetSellerDetails(String sellerID)
         {
             var innerJoinQuery =
-            from sellerItem in _context.SellerItems
-            join item in _context.FoodItems on sellerItem.itemID equals item.itemID
-                                           where sellerItem.sellerID == sellerID
+            from sellerItem in _context.SellerItems where sellerItem.sellerID == sellerID
                                        select new SellerDetails
             {
                 isAvailable = sellerItem.isAvailable,
                 itemID = sellerItem.itemID,
-                itemName = item.itemName,
+                itemName = sellerItem.itemName,
                 quantity = sellerItem.quantity,
                 servedFor = sellerItem.servedFor,
                 sellerID = sellerItem.sellerID,
                 price = sellerItem.price,
-                                  flatID = sellerItem.flatID
+                flatID = sellerItem.flatID,
+                itemDesc = sellerItem.itemDesc
             }; //produces flat sequence
 
             return innerJoinQuery;

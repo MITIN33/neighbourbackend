@@ -47,6 +47,12 @@ namespace FoodService.Models
             get;
             set;
         }
+
+        public String itemName
+        {
+            get;
+            set;
+        }
        
         public float price { get; set; }
 

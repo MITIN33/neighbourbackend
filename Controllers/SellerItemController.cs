@@ -39,10 +39,10 @@ namespace WebApplication1.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]SellerItem sellerItem)
+        public IActionResult Post([FromBody]SellerItem sellerItem)
         {
-            manager.AddSellerItem(sellerItem);
-
+             manager.AddSellerItem(sellerItem);
+             return Ok();
         }
 
         // PUT api/values/5

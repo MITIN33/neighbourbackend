@@ -30,3 +30,14 @@ C:/Users/Suchu/Documents/Visual Studio 2017/Projects/NeighborFoodBackend/neighbo
 C:/Users/Suchu/Documents/Visual Studio 2017/Projects/NeighborFoodBackend/neighbourbackend/obj/Debug/netcoreapp2.0/NeighborFoodBackend.dll
 C:/Users/Suchu/Documents/Visual Studio 2017/Projects/NeighborFoodBackend/neighbourbackend/obj/Debug/netcoreapp2.0/NeighborFoodBackend.pdb
 C:/Users/Suchu/Documents/Visual Studio 2017/Projects/NeighborFoodBackend/neighbourbackend/obj/Debug/netcoreapp2.0/NeighborFoodBackend.csprojResolveAssemblyReference.cache
+/Users/mitin.d/AndroidProjects/andb/neighbourbackend/bin/Debug/netcoreapp2.0/NeighborFoodBackend.deps.json
+/Users/mitin.d/AndroidProjects/andb/neighbourbackend/bin/Debug/netcoreapp2.0/NeighborFoodBackend.runtimeconfig.json
+/Users/mitin.d/AndroidProjects/andb/neighbourbackend/bin/Debug/netcoreapp2.0/NeighborFoodBackend.runtimeconfig.dev.json
+/Users/mitin.d/AndroidProjects/andb/neighbourbackend/bin/Debug/netcoreapp2.0/NeighborFoodBackend.dll
+/Users/mitin.d/AndroidProjects/andb/neighbourbackend/bin/Debug/netcoreapp2.0/NeighborFoodBackend.pdb
+/Users/mitin.d/AndroidProjects/andb/neighbourbackend/obj/Debug/netcoreapp2.0/NeighborFoodBackend.csprojAssemblyReference.cache
+/Users/mitin.d/AndroidProjects/andb/neighbourbackend/obj/Debug/netcoreapp2.0/NeighborFoodBackend.csproj.CoreCompileInputs.cache
+/Users/mitin.d/AndroidProjects/andb/neighbourbackend/obj/Debug/netcoreapp2.0/NeighborFoodBackend.AssemblyInfoInputs.cache
+/Users/mitin.d/AndroidProjects/andb/neighbourbackend/obj/Debug/netcoreapp2.0/NeighborFoodBackend.AssemblyInfo.cs
+/Users/mitin.d/AndroidProjects/andb/neighbourbackend/obj/Debug/netcoreapp2.0/NeighborFoodBackend.dll
+/Users/mitin.d/AndroidProjects/andb/neighbourbackend/obj/Debug/netcoreapp2.0/NeighborFoodBackend.pdb
