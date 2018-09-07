@@ -56,6 +56,8 @@ namespace FoodService.Models
        
         public float price { get; set; }
 
+        public bool veg { get; set; }
+
         public Boolean isAvailable { get; set; }
 
         [ForeignKey("Flat")]

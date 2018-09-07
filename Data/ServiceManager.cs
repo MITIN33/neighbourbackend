@@ -389,7 +389,8 @@ namespace NeighborBackend.Data
                 flatID = sellerDetails.flatID,
                 itemID = Guid.NewGuid().ToString(),
                 itemName = sellerDetails.itemName,
-                itemDesc = sellerDetails.itemDesc
+                itemDesc = sellerDetails.itemDesc,
+                veg = sellerDetails.veg
 
             };
             _context.SellerItems.Add(sellerItem);
@@ -421,9 +422,10 @@ namespace NeighborBackend.Data
                 sellerItemNew.sellerID = SellerItem.sellerID;
                 sellerItemNew.servedFor = SellerItem.servedFor;
                 sellerItemNew.quantity = SellerItem.quantity;
-
+                sellerItemNew.itemDesc = SellerItem.itemDesc;
+                sellerItemNew.itemName = SellerItem.itemName;
                 sellerItemNew.itemID = SellerItem.itemID;
-
+                sellerItemNew.veg = SellerItem.veg;
                 sellerItemID = _context.SaveChanges();
             }
             return sellerItemID;
