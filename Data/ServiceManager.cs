@@ -46,7 +46,7 @@ namespace NeighborBackend.Data
                 var Users = _context.Users.ToList();
                 return Users;
             }
-            catch(SqlException sq)
+            catch (SqlException sq)
             {
                 throw new Exception(sq.Message);
             }
@@ -62,7 +62,7 @@ namespace NeighborBackend.Data
             var userNew = _context.Users.Find(id);
             if (userNew != null)
             {
-              
+
                 userNew.flatID = user.flatID;
                 userNew.userName = user.userName;
                 userID = _context.SaveChanges();
@@ -133,37 +133,38 @@ namespace NeighborBackend.Data
             return apartmentID;
         }
 
-      
+
 
         public IEnumerable<SellerItemDetails> GetSellerItemDetailsByApartmentAndUser(String apartmentID, String userId)
         {
             List<SellerItemDetails> sellerItemDetails = new List<SellerItemDetails>();
-            var flatList = _context.Flats.Where(x => x.apartmentID == apartmentID).ToList();
-            foreach (var item in flatList)
+            var userList = _context.Users.Where(x => x.apartmentID == apartmentID).ToList();
+            foreach (var user in userList)
             {
-                var users = _context.Users.Where(x => x.userUid == userId).FirstOrDefault();
-                SellerItemDetails sellerItem = new SellerItemDetails()
+                if (user.userUid != userId)
                 {
-                   FoodItems = getSellerItemsForFlat(item.FlatID).ToList(),
-                    flatNumber = item.FlatNumber,
-                    rating = users.rating,
-                    sellerName = users.fname +" "+users.lname,
-                    SellerId =userId
-
-                };
-                sellerItemDetails.Add(sellerItem);
+                    SellerItemDetails sellerItem = new SellerItemDetails()
+                    {
+                        FoodItems = getSellerItemsForFlat(user.userUid).ToList(),
+                        flatNumber = _context.Flats.Where(x => x.FlatID == user.flatID).FirstOrDefault().FlatNumber,
+                        rating = user.rating,
+                        sellerName = user.fname + " " + user.lname,
+                        SellerId = user.userUid
+                    };
+                    sellerItemDetails.Add(sellerItem);
+                }
             }
 
             return sellerItemDetails;
         }
-        
 
-        public IEnumerable<FoodItem> getSellerItemsForFlat(String flatId)
+
+        public IEnumerable<FoodItem> getSellerItemsForFlat(String userID)
         {
-            var foods = from sellerItem in _context.SellerItems 
-                                                   join food in _context.FoodItems on sellerItem.itemID equals food.itemID
-                                                       where sellerItem.flatID  == flatId
-                                                   select new FoodItem{ itemName = food.itemName , itemID = food.itemID};
+            var foods = from sellerItem in _context.SellerItems
+                        join food in _context.FoodItems on sellerItem.itemID equals food.itemID
+                        where sellerItem.sellerID == userID
+                        select new FoodItem { itemName = food.itemName, itemID = food.itemID };
 
             return foods;
 
@@ -221,16 +222,25 @@ namespace NeighborBackend.Data
         }
 
 
-        public IEnumerable<SellerFlat> GetSellerItemsByFlat(String flatID){
+        public IEnumerable<SellerFlat> GetSellerItemsByFlat(String flatID)
+        {
             var innerJoinQuery =
             from sellerItem in _context.SellerItems
             join item in _context.FoodItems on sellerItem.itemID equals item.itemID
             where sellerItem.flatID == flatID
-                                       select new SellerFlat {isAvailable = sellerItem.isAvailable , itemID = sellerItem.itemID,itemName = item.itemName,quantity=sellerItem.quantity,
-                                                                                                                                                                            servedFor = sellerItem.servedFor,sellerID=sellerItem.sellerID,price=sellerItem.price}; //produces flat sequence
-            
+            select new SellerFlat
+            {
+                isAvailable = sellerItem.isAvailable,
+                itemID = sellerItem.itemID,
+                itemName = item.itemName,
+                quantity = sellerItem.quantity,
+                servedFor = sellerItem.servedFor,
+                sellerID = sellerItem.sellerID,
+                price = sellerItem.price
+            }; //produces flat sequence
+
             return innerJoinQuery;
-            
+
         }
         public List<Flat> GetAllFlatsForApartment(String apartmentID)
         {
@@ -246,7 +256,7 @@ namespace NeighborBackend.Data
             var FlatNew = _context.Flats.Find(id);
             if (FlatNew != null)
             {
-              
+
                 FlatNew.FlatNumber = Flat.FlatNumber;
                 flatID = _context.SaveChanges();
             }
@@ -377,16 +387,16 @@ namespace NeighborBackend.Data
                 price = sellerDetails.price,
                 quantity = sellerDetails.quantity,
                 servedFor = sellerDetails.servedFor,
-                flatID = sellerDetails.flatID , 
-                itemID   = Guid.NewGuid().ToString(),
+                flatID = sellerDetails.flatID,
+                itemID = Guid.NewGuid().ToString(),
                 itemName = sellerDetails.itemName,
                 itemDesc = sellerDetails.itemDesc
 
             };
             _context.SellerItems.Add(sellerItem);
-            
-           
-           
+
+
+
             _context.SaveChanges();
         }
 
@@ -412,9 +422,9 @@ namespace NeighborBackend.Data
                 sellerItemNew.sellerID = SellerItem.sellerID;
                 sellerItemNew.servedFor = SellerItem.servedFor;
                 sellerItemNew.quantity = SellerItem.quantity;
-               
+
                 sellerItemNew.itemID = SellerItem.itemID;
-               
+
                 sellerItemID = _context.SaveChanges();
             }
             return sellerItemID;
@@ -452,8 +462,9 @@ namespace NeighborBackend.Data
         public IEnumerable<SellerDetails> GetSellerDetails(String sellerID)
         {
             var innerJoinQuery =
-            from sellerItem in _context.SellerItems where sellerItem.sellerID == sellerID
-                                       select new SellerDetails
+            from sellerItem in _context.SellerItems
+            where sellerItem.sellerID == sellerID
+            select new SellerDetails
             {
                 isAvailable = sellerItem.isAvailable,
                 itemID = sellerItem.itemID,
