@@ -426,6 +426,7 @@ namespace NeighborBackend.Data
                 sellerItemNew.itemName = SellerItem.itemName;
                 sellerItemNew.itemID = SellerItem.itemID;
                 sellerItemNew.veg = SellerItem.veg;
+                sellerItemNew.price = SellerItem.price;
                 sellerItemID = _context.SaveChanges();
             }
             return sellerItemID;
