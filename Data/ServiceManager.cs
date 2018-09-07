@@ -162,9 +162,8 @@ namespace NeighborBackend.Data
         public IEnumerable<FoodItem> getSellerItemsForFlat(String userID)
         {
             var foods = from sellerItem in _context.SellerItems
-                        join food in _context.FoodItems on sellerItem.itemID equals food.itemID
                         where sellerItem.sellerID == userID
-                        select new FoodItem { itemName = food.itemName, itemID = food.itemID };
+                        select new FoodItem { itemName = sellerItem.itemName, itemDesc = sellerItem.itemDesc };
 
             return foods;
 
