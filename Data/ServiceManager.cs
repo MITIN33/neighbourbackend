@@ -499,9 +499,10 @@ namespace NeighborBackend.Data
 
         public void AddOrder(Order order)
         {
-            foreach (String item in order.sellerItemIds)
+            foreach (SellerDetails item in order.sellerItemIds)
             {
-                order.sellerItemId = item;
+                order.sellerItemId = item.sellerItemID;
+                order.quantity = item.quantity;
                 _context.Orders.Add(order);
             }
             _context.SaveChanges();
@@ -511,7 +512,7 @@ namespace NeighborBackend.Data
         {
             var order = _context.Orders.FirstOrDefault(b => b.orderID == id);
             return order;
-        }
+        } 
 
 
         public IEnumerable<Order> GetAllOrders()

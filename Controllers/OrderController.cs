@@ -42,7 +42,7 @@ namespace WebApplication1.Controllers
         {
             try{
                 manager.AddOrder(order);
-                return StatusCode(200, "{Order Placed}");
+                return StatusCode(200, "{'status': 'Order Placed'}");
             }
             catch(Exception ex)
             {

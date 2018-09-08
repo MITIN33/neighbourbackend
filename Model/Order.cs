@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using NeighborFoodBackend.Model.Entity;
+
 namespace FoodService.Models
 {
     public class Order
@@ -48,7 +50,7 @@ namespace FoodService.Models
         public int quantity { get; set; }
 
         [NotMapped]
-        public List<String> sellerItemIds { get; set; }
+        public List<SellerDetails> sellerItemIds { get; set; }
 
     }
 }
