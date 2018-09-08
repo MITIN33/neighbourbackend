@@ -499,7 +499,11 @@ namespace NeighborBackend.Data
 
         public void AddOrder(Order order)
         {
-            _context.Orders.Add(order);
+            foreach (String item in order.sellerItemIds)
+            {
+                order.sellerItemId = item;
+                _context.Orders.Add(order);
+            }
             _context.SaveChanges();
         }
 

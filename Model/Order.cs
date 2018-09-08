@@ -36,7 +36,7 @@ namespace FoodService.Models
         }
 
        
-        public DateTime createTime
+        public String createTime
         {
             get;
             set;
@@ -46,6 +46,9 @@ namespace FoodService.Models
         public String sellerItemId { get; set; }
 
         public int quantity { get; set; }
+
+        [NotMapped]
+        public List<String> sellerItemIds { get; set; }
 
     }
 }

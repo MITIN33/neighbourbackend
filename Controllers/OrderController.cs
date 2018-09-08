@@ -38,10 +38,16 @@ namespace WebApplication1.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]Order order)
+        public IActionResult Post([FromBody]Order order)
         {
-            manager.AddOrder(order);
-
+            try{
+                manager.AddOrder(order);
+                return StatusCode(200, "{Order Placed}");
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500,ex);
+            }
         }
 
         // PUT api/values/5
