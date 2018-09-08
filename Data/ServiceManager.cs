@@ -499,12 +499,15 @@ namespace NeighborBackend.Data
 
         public void AddOrder(Order order)
         {
+            List<Order> list= new List<Order>();
             foreach (SellerDetails item in order.sellerItemIds)
             {
                 order.sellerItemId = item.sellerItemID;
+                order.id = Guid.NewGuid().ToString();
                 order.quantity = item.quantity;
-                _context.Orders.Add(order);
+                list.Add(order);
             }
+            _context.Orders.AddRange(list);
             _context.SaveChanges();
         }
 
