@@ -11,6 +11,9 @@ namespace FoodService.Models
         
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public String id { get; set; }
+        
+        
         public String orderID
         {
             get;
