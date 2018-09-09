@@ -20,5 +20,6 @@ namespace WebApplication1.Data
         public DbSet<Apartment> Apartments { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<SellerItem> SellerItems { get; set; }
+        public DbSet<UserNotification> UserNotification { get; set; }
     }
 }

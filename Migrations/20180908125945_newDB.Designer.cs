@@ -11,8 +11,8 @@ using WebApplication1.Data;
 namespace NeighborFoodBackend.Migrations
 {
     [DbContext(typeof(FoodserviceContext))]
-    [Migration("20180818083343_new")]
-    partial class @new
+    [Migration("20180908125945_newDB")]
+    partial class newDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,10 +65,12 @@ namespace NeighborFoodBackend.Migrations
 
             modelBuilder.Entity("FoodService.Models.Order", b =>
                 {
-                    b.Property<string>("orderID")
+                    b.Property<string>("id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("createTime");
+                    b.Property<string>("createTime");
+
+                    b.Property<string>("orderID");
 
                     b.Property<string>("orderStatus");
 
@@ -82,7 +84,7 @@ namespace NeighborFoodBackend.Migrations
 
                     b.Property<string>("userUid");
 
-                    b.HasKey("orderID");
+                    b.HasKey("id");
 
                     b.HasIndex("sellerItemId");
 
@@ -100,7 +102,11 @@ namespace NeighborFoodBackend.Migrations
 
                     b.Property<bool>("isAvailable");
 
+                    b.Property<string>("itemDesc");
+
                     b.Property<string>("itemID");
+
+                    b.Property<string>("itemName");
 
                     b.Property<float>("price");
 
@@ -111,6 +117,8 @@ namespace NeighborFoodBackend.Migrations
                     b.Property<int>("servedFor");
 
                     b.Property<string>("userUid");
+
+                    b.Property<bool>("veg");
 
                     b.HasKey("SellerItemID");
 
