@@ -55,13 +55,13 @@ namespace WebApplication1.Controllers
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public IActionResult Put(String id, [FromBody]UserNotification flat)
+        [HttpPut]
+        public IActionResult Put([FromBody]UserNotification flat)
         {
            
              try
              {
-                 manager.UpdateUser(id, flat.tokenId);
+                 manager.UpdateUser(flat.userUid, flat.tokenId);
                  return Ok(new ResponseObject("Success"));
              }
              catch (System.Exception ex)
