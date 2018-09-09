@@ -38,12 +38,12 @@ namespace NeighborBackend.Data
             return context.UserNotification.Where(x => x.userUid == id).FirstOrDefault().tokenId;
         }
 
-        public void UpdateToken(String user, String token)
+        public void UpdateUser(String user, String token)
         {
-            var result = context.UserNotification.Where(x => x.userUid == user).FirstOrDefault();
+            var result = context.UserNotification.Where(x => x.tokenId == token).FirstOrDefault();
             if (result != null)
             {
-                result.tokenId = token;
+                result.userUid = user;
                 context.SaveChanges();
             }
             else

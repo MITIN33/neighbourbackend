@@ -61,7 +61,7 @@ namespace WebApplication1.Controllers
            
              try
              {
-                 manager.UpdateToken(id, flat.tokenId);
+                 manager.UpdateUser(id, flat.tokenId);
                  return Ok(new ResponseObject("Success"));
              }
              catch (System.Exception ex)
