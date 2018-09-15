@@ -9,7 +9,6 @@ namespace FoodService.Models
   public class UserNotification
   {
       public String userUid { get; set; }   
-      [Key]
       public String tokenId { get; set; }
   }
 }

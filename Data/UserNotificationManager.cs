@@ -40,11 +40,18 @@ namespace NeighborBackend.Data
 
         public void UpdateUser(String user, String token)
         {
-            var result = context.UserNotification.Where(x => x.tokenId == token).FirstOrDefault();
-            if (result != null)
+            var tokenobj = context.UserNotification.Where(x => x.tokenId == token).FirstOrDefault();
+            var userobj = context.UserNotification.Where(x => x.userUid == user).FirstOrDefault();
+            if (tokenobj != null)  // if token present then update user
             {
-                result.userUid = user;
+                tokenobj.userUid = user;
                 context.SaveChanges();
+            }
+            else if (userobj != null)
+            {
+                context.UserNotification.Remove(userobj);
+                context.SaveChanges();
+                AddUserTokenEntry(user, token);
             }
             else
             {
