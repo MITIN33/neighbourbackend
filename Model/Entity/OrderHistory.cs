@@ -20,5 +20,6 @@ namespace FoodService.Models.Entity
         public String createTime { get; set; }
         public String orderStatus { get; set; }
         public String sellerName { get; set; }
+        public String endTime { get; set; }
     }
 }

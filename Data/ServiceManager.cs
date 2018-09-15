@@ -522,7 +522,7 @@ namespace NeighborBackend.Data
         {
             var list = _context.Orders.Where(x=>x.userPlacedBy == id).ToList();
             var orders = from order in list join user in _context.Users
-                         on order.userPlacedBy equals user.userUid join flat in _context.Flats
+                         on order.userPlacedTo equals user.userUid join flat in _context.Flats
                          on user.flatID equals flat.FlatID join sellerItem in _context.SellerItems
                          on order.sellerItemId equals sellerItem.SellerItemID
                          where order.userPlacedBy == id
@@ -533,7 +533,8 @@ namespace NeighborBackend.Data
                            sellerName = user.fname + " " + user.lname,
                            flatNumber = flat.FlatNumber,
                            totalBill = (int)sellerItem.price * order.quantity,
-                           createTime = order.createTime
+                           createTime = order.createTime,
+                           endTime = order.endTime
                          };
                          
             return orders.ToList();
@@ -566,7 +567,8 @@ namespace NeighborBackend.Data
                            sellerName = user.fname + " " + user.lname,
                            flatNumber = flat.FlatNumber,
                            totalBill = (int)sellerItem.price * order.quantity,
-                           createTime = order.createTime
+                           createTime = order.createTime,
+                           endTime = order.endTime
                          };
                          
             return orders;
