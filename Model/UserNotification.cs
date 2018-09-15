@@ -6,9 +6,10 @@ using NeighborFoodBackend.Model.Entity;
 
 namespace FoodService.Models
 {
-  public class UserNotification
-  {
-      public String userUid { get; set; }   
-      public String tokenId { get; set; }
-  }
+    public class UserNotification
+    {
+        public String userUid { get; set; }
+        [Key]
+        public String tokenId { get; set; }
+    }
 }
