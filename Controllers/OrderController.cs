@@ -20,48 +20,83 @@ namespace WebApplication1.Controllers
             manager = new OrderManager(context);
         }
 
-        [HttpGet]
-        public IEnumerable<Order> GetAll()
-        {
-            return manager.GetAllOrders();
-
-        }
-
         // GET api/values/5
         [HttpGet("{id}")]
-        public Order Get(String id)
+        public Order GetOrderDetail(String id)
         {
             return manager.GetOrder(id);
         }
 
 
+        [HttpGet("buyer/{id}")]
+        public IActionResult GetOrderByBuyerUser(String id)
+        {
+            try
+            {
+                return Ok(manager.GetOrderbyBuyer(id));
+            }
+            catch (System.Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
+
+        [HttpGet("seller/{id}")]
+        public IActionResult GetOrderBySellerUser(String id)
+        {
+            try
+            {
+                return Ok(manager.GetOrderbySeller(id));
+            }
+            catch (System.Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
 
         // POST api/values
         [HttpPost]
         public IActionResult Post([FromBody]Order order)
         {
-            try{
+            try
+            {
                 manager.AddOrder(order);
                 return StatusCode(200, "{'status': 'Order Placed'}");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return StatusCode(500,ex);
+                return StatusCode(500, ex);
             }
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(String id, [FromBody]Order order)
+        [HttpPut("{id}/{status}")]
+        public IActionResult Put(String id, String status)
         {
-            manager.UpdateOrder(id, order);
+            try
+            {
+                manager.UpdateOrder(id, status);
+                return StatusCode(200, "{'status': 'Updated Successfully'}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(String id)
+        public IActionResult Delete(String id)
         {
-            manager.DeleteOrder(id);
+            try
+            {
+                manager.DeleteOrder(id);
+                return StatusCode(200, "{'status': 'Deleted Successfully'}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
     }
 }

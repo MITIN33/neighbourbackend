@@ -517,6 +517,18 @@ namespace NeighborBackend.Data
             return order;
         } 
 
+        public IEnumerable<Order> GetOrderbyBuyer(String id)
+        {
+            var order = _context.Orders.Where(b => b.userPlacedBy == id).ToList();
+            return order;
+        } 
+
+        public IEnumerable<Order> GetOrderbySeller(String id)
+        {
+            var order = _context.Orders.Where(b => b.userPlacedTo == id).ToList();
+            return order;
+        } 
+
 
         public IEnumerable<Order> GetAllOrders()
         {
@@ -524,15 +536,13 @@ namespace NeighborBackend.Data
             return orders;
         }
 
-        public long UpdateOrder(String id, Order order)
+        public long UpdateOrder(String id, String orderStatus)
         {
             int orderID = 0;
-            var orderNew = _context.Orders.Find(id);
+            var orderNew = _context.Orders.Where(x=> x.orderID == id).FirstOrDefault();
             if (orderNew != null)
             {
-                orderNew.orderStatus = order.orderStatus;
-                orderNew.userPlacedBy = order.userPlacedBy;
-                orderNew.userPlacedTo = order.userPlacedTo;
+                orderNew.orderStatus = orderStatus;
                 orderID = _context.SaveChanges();
             }
             return orderID;
