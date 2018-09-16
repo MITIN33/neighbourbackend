@@ -518,10 +518,11 @@ namespace NeighborBackend.Data
             return order;
         } 
 
-        public IEnumerable<OrderHistory> GetOrderbyBuyer(String id)
+        public IEnumerable<OrderHistory> GetOrderbyUser(String id)
         {
             var list = _context.Orders.Where(x=>x.userPlacedBy == id).ToList();
-            var orders = from order in list join user in _context.Users
+            List<OrderHistory> finalList = new List<OrderHistory>();
+            var orders1 = from order in list join user in _context.Users
                          on order.userPlacedTo equals user.userUid join flat in _context.Flats
                          on user.flatID equals flat.FlatID join sellerItem in _context.SellerItems
                          on order.sellerItemId equals sellerItem.SellerItemID
@@ -534,23 +535,33 @@ namespace NeighborBackend.Data
                            flatNumber = flat.FlatNumber,
                            totalBill = (int)sellerItem.price * order.quantity,
                            createTime = order.createTime,
-                           endTime = order.endTime
+                           endTime = order.endTime,
+                           orderType = "REQUESTED"
                          };
                          
-            return orders.ToList();
+            finalList.AddRange(orders1.ToList());
+            list = _context.Orders.Where(x=>x.userPlacedTo == id).ToList();
+            var orders2 = from order in list join user in _context.Users
+                         on order.userPlacedBy equals user.userUid join flat in _context.Flats
+                         on user.flatID equals flat.FlatID join sellerItem in _context.SellerItems
+                         on order.sellerItemId equals sellerItem.SellerItemID
+                         where order.userPlacedTo == id
+                         select new OrderHistory
+                         {
+                           orderId = order.orderID,
+                           orderStatus = order.orderStatus,
+                           sellerName = user.fname + " " + user.lname,
+                           flatNumber = flat.FlatNumber,
+                           totalBill = (int)sellerItem.price * order.quantity,
+                           createTime = order.createTime,
+                           endTime = order.endTime,
+                           orderType = "ACCEPTED"
+                         };
+
+            finalList.AddRange(orders2.ToList());
+
+            return finalList.OrderBy(x=>x.createTime);
         } 
-
-        private int getBillForOrders(List<Order> orders)
-        {
-            int sum = 0;
-            foreach(Order order in orders)
-            {
-                var sellerItem = _context.SellerItems.Where(x=>x.SellerItemID == order.sellerItemId).FirstOrDefault();
-                sum += order.quantity * (int)sellerItem.price;
-            }
-
-            return sum;
-        }
 
         public IEnumerable<OrderHistory> GetOrderbySeller(String id)
         {

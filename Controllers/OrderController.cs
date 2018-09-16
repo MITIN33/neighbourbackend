@@ -28,12 +28,12 @@ namespace WebApplication1.Controllers
         }
 
 
-        [HttpGet("buyer/{id}")]
+        [HttpGet("user/{id}")]
         public IActionResult GetOrderByBuyerUser(String id)
         {
             try
             {
-                return Ok(manager.GetOrderbyBuyer(id));
+                return Ok(manager.GetOrderbyUser(id));
             }
             catch (System.Exception ex)
             {
