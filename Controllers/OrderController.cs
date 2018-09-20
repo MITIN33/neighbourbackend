@@ -41,19 +41,6 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [HttpGet("seller/{id}")]
-        public IActionResult GetOrderBySellerUser(String id)
-        {
-            try
-            {
-                return Ok(manager.GetOrderbySeller(id));
-            }
-            catch (System.Exception ex)
-            {
-                return StatusCode(500, ex);
-            }
-        }
-
         // POST api/values
         [HttpPost]
         public IActionResult Post([FromBody]Order order)

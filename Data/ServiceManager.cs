@@ -144,15 +144,19 @@ namespace NeighborBackend.Data
             {
                 if (user.userUid != userId)
                 {
-                    SellerItemDetails sellerItem = new SellerItemDetails()
+                    var foodlist = getSellerItemsForFlat(user.userUid).ToList();
+                    if (foodlist.Count != 0)
                     {
-                        FoodItems = getSellerItemsForFlat(user.userUid).ToList(),
-                        flatNumber = _context.Flats.Where(x => x.FlatID == user.flatID).FirstOrDefault().FlatNumber,
-                        rating = user.rating,
-                        sellerName = user.fname + " " + user.lname,
-                        SellerId = user.userUid
-                    };
-                    sellerItemDetails.Add(sellerItem);
+                        SellerItemDetails sellerItem = new SellerItemDetails()
+                        {
+                            FoodItems = foodlist,
+                            flatNumber = _context.Flats.Where(x => x.FlatID == user.flatID).FirstOrDefault().FlatNumber,
+                            rating = user.rating,
+                            sellerName = user.fname + " " + user.lname,
+                            SellerId = user.userUid
+                        };
+                        sellerItemDetails.Add(sellerItem);
+                    }
                 }
             }
 
@@ -524,11 +528,11 @@ namespace NeighborBackend.Data
             List<OrderHistory> finalList = new List<OrderHistory>();
             var orders1 = from order in list
                           join user in _context.Users
-      on order.userPlacedTo equals user.userUid
+                          on order.userPlacedTo equals user.userUid
                           join flat in _context.Flats
-on user.flatID equals flat.FlatID
+                          on user.flatID equals flat.FlatID
                           join sellerItem in _context.SellerItems
-on order.sellerItemId equals sellerItem.SellerItemID
+                          on order.sellerItemId equals sellerItem.SellerItemID
                           where order.userPlacedBy == id
                           select new OrderHistory
                           {
@@ -546,11 +550,11 @@ on order.sellerItemId equals sellerItem.SellerItemID
             list = _context.Orders.Where(x => x.userPlacedTo == id).ToList();
             var orders2 = from order in list
                           join user in _context.Users
-      on order.userPlacedBy equals user.userUid
+                          on order.userPlacedBy equals user.userUid
                           join flat in _context.Flats
-on user.flatID equals flat.FlatID
+                          on user.flatID equals flat.FlatID
                           join sellerItem in _context.SellerItems
-on order.sellerItemId equals sellerItem.SellerItemID
+                          on order.sellerItemId equals sellerItem.SellerItemID
                           where order.userPlacedTo == id
                           select new OrderHistory
                           {
@@ -565,35 +569,8 @@ on order.sellerItemId equals sellerItem.SellerItemID
                           };
 
             finalList.AddRange(orders2.ToList());
-
             return finalList.OrderBy(x => x.createTime);
         }
-
-        public IEnumerable<OrderHistory> GetOrderbySeller(String id)
-        {
-            var list = _context.Orders.Where(x => x.userPlacedTo == id).ToList();
-            var orders = from order in list
-                         join user in _context.Users
-     on order.userPlacedBy equals user.userUid
-                         join flat in _context.Flats
-on user.flatID equals flat.FlatID
-                         join sellerItem in _context.SellerItems
-on order.sellerItemId equals sellerItem.SellerItemID
-                         where order.userPlacedTo == id
-                         select new OrderHistory
-                         {
-                             orderId = order.orderID,
-                             orderStatus = order.orderStatus,
-                             sellerName = user.fname + " " + user.lname,
-                             flatNumber = flat.FlatNumber,
-                             totalBill = (int)sellerItem.price * order.quantity,
-                             createTime = order.createTime,
-                             endTime = order.endTime
-                         };
-
-            return orders;
-        }
-
 
         public IEnumerable<Order> GetAllOrders()
         {
