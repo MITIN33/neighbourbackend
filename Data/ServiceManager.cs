@@ -63,22 +63,10 @@ namespace NeighborBackend.Data
             var userNew = _context.Users.Find(id);
             if (userNew != null)
             {
-
-                userNew.flatID = user.flatID;
-                userNew.userName = user.userName;
+                userNew.photoUrl = user.photoUrl;
             }
             _context.SaveChanges();
             return userID;
-        }
-
-        public void UpdatePhotoUrl(String id, String Url)
-        {
-            var userNew = _context.Users.Find(id);
-            if (userNew != null)
-            {
-                userNew.photoUrl = Url;
-            }
-            _context.SaveChanges();
         }
 
         public Boolean UserExists(String uid)
