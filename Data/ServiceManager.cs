@@ -561,7 +561,7 @@ namespace NeighborBackend.Data
                               totalBill = (int)sellerItem.price * order.quantity,
                               createTime = order.createTime,
                               endTime = order.endTime,
-                              orderType = "REQUESTED"
+                              orderType = "PLACED"
                           };
 
             finalList.AddRange(orders1.ToList());
@@ -583,7 +583,7 @@ namespace NeighborBackend.Data
                               totalBill = (int)sellerItem.price * order.quantity,
                               createTime = order.createTime,
                               endTime = order.endTime,
-                              orderType = "ACCEPTED"
+                              orderType = "RECEIVED"
                           };
 
             finalList.AddRange(orders2.ToList());
