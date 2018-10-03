@@ -67,6 +67,12 @@ namespace WebApplication1.Controllers
             manager.UpdateUser(id, user);
         }
 
+        [HttpPut("{id}/photo/{url}")]
+        public void Put(String id, String url)
+        {
+            manager.UpdatePhotoUrl(id, url);
+        }
+
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(String id)

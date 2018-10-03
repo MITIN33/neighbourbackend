@@ -21,6 +21,7 @@ namespace NeighborFoodBackend.Model.Entity
             get;
             set;
         }
-
+        
+        public String PhotoUrl { get; set; }
     }
 }
