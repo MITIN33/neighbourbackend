@@ -588,6 +588,7 @@ namespace NeighborBackend.Data
                           };
 
             finalList.AddRange(orders2.ToList());
+            finalList = finalList.GroupBy(x=>x.orderId).Select(n=>n.First()).ToList();
             return finalList.OrderBy(x => x.createTime);
         }
 
