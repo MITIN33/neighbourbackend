@@ -505,12 +505,18 @@ namespace NeighborBackend.Data
         public void AddOrder(Order order)
         {
             List<Order> list = new List<Order>();
-            foreach (SellerDetails item in order.sellerItemIds)
+            foreach (SellerDetails item in order.sellerItems)
             {
-                order.sellerItemId = item.sellerItemID;
-                order.id = Guid.NewGuid().ToString();
-                order.quantity = item.quantity;
-                list.Add(order);
+                Order orderItem = new Order();
+                orderItem.createTime = order.createTime;
+                orderItem.orderID = order.orderID;
+                orderItem.orderStatus = order.orderStatus;
+                orderItem.sellerItemId = item.sellerItemID;
+                orderItem.id = Guid.NewGuid().ToString();
+                orderItem.userPlacedBy = order.userPlacedBy;
+                orderItem.userPlacedTo = order.userPlacedTo;
+                orderItem.quantity = item.quantity;
+                list.Add(orderItem);
             }
             _context.Orders.AddRange(list);
             _context.SaveChanges();
@@ -519,6 +525,19 @@ namespace NeighborBackend.Data
         public Order GetOrder(String id)
         {
             var order = _context.Orders.FirstOrDefault(b => b.orderID == id);
+            List<Order> items = _context.Orders.Where(o => o.orderID == id).ToList(); 
+            List<SellerDetails> sellerItems = new List<SellerDetails>();
+            foreach (var item in items)
+            {
+                var sellerItem = _context.SellerItems.Where(x=>x.SellerItemID == item.sellerItemId).FirstOrDefault();
+                sellerItems.Add(new SellerDetails{
+                    itemName = sellerItem.itemName,
+                    itemDesc = sellerItem.itemDesc,
+                    quantity = item.quantity,
+                    price = sellerItem.price
+                });
+            }
+            order.sellerItems = sellerItems;
             return order;
         }
 

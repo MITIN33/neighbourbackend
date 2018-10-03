@@ -55,7 +55,7 @@ namespace FoodService.Models
         public String endTime { get; set; }
 
         [NotMapped]
-        public List<SellerDetails> sellerItemIds { get; set; }
+        public List<SellerDetails> sellerItems { get; set; }
 
     }
 }
