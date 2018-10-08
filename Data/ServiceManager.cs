@@ -166,7 +166,7 @@ namespace NeighborBackend.Data
         public IEnumerable<FoodItem> getSellerItemsForFlat(String userID)
         {
             var foods = from sellerItem in _context.SellerItems
-                        where sellerItem.sellerID == userID
+                        where sellerItem.sellerID == userID && sellerItem.isAvailable
                         select new FoodItem { itemName = sellerItem.itemName, itemDesc = sellerItem.itemDesc };
 
             return foods;
