@@ -365,24 +365,6 @@ namespace NeighborBackend.Data
 
         public void AddSellerItemDetails(SellerDetails sellerDetails)
         {
-            /*var foodItem =  _context.FoodItems.Where(x=> x.itemName == sellerDetails.itemName);
-            String guid = Guid.NewGuid().ToString();
-            String itemIDNew;
-            if (foodItem == null)
-            {
-                itemIDNew = guid;
-                FoodItem fI = new FoodItem
-                {
-                    itemDesc = sellerDetails.itemDesc,
-                    itemName = sellerDetails.itemName,
-                    itemID = guid
-                };
-                _context.FoodItems.Add(fI);
-            }
-            else{
-                itemIDNew = sellerDetails.itemID;
-            }*/
-
             SellerItem sellerItem = new SellerItem
             {
                 sellerID = sellerDetails.sellerID,
@@ -398,9 +380,6 @@ namespace NeighborBackend.Data
 
             };
             _context.SellerItems.Add(sellerItem);
-
-
-
             _context.SaveChanges();
         }
 
@@ -436,6 +415,16 @@ namespace NeighborBackend.Data
             return sellerItemID;
         }
 
+        public Boolean toggleAvailability(String userID, Boolean value)
+        {
+            List<SellerItem> sellerItems = _context.SellerItems.Where(x=>x.sellerID == userID).ToList();
+            foreach (var item in sellerItems)
+            {
+                item.isAvailable = value;
+            }
+            _context.SaveChanges();
+            return value;
+        }
         public long UpdateSellerItemDetails(String id, SellerDetails sellerDetails)
         {
             int sellerItemID = 0;

@@ -73,6 +73,20 @@ namespace WebApplication1.Controllers
             return manager.GetSellerDetails(id);
         }
 
+        [Route("{id}/user/{value}")]
+        [HttpGet]
+        public IActionResult ToggleAvailability(String id, String value)
+        {
+            try
+            {
+                return Ok(manager.toggleAvailability(id,value == "true"?true:false));
+            }
+            catch (System.Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
+
 
         [Route("details")]
         [HttpPost]
