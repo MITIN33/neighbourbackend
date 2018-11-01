@@ -29,7 +29,7 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                var user = manager.GetUser(id);
+                var user = manager.GetUserInfo(id);
                 if (user != null)
                 {
                     return Ok(user);

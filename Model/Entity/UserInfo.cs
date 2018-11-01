@@ -19,6 +19,7 @@ namespace FoodService.Models
             set;
         }
 
+        public String flatId { get; set; }
         public String flatNumber
         {
             get;
@@ -43,7 +44,6 @@ namespace FoodService.Models
         }
         public float rating { get; set; }
         public String photoUrl { get; set; }
-        public String status { get; set; }
-         public String apartmentName { get; set; }
+        public String apartmentName { get; set; }
     }
 }

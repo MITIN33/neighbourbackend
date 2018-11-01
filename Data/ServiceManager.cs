@@ -39,7 +39,28 @@ namespace NeighborBackend.Data
             return Item;
         }
 
+        public UserInfo GetUserInfo(String userId)
+        {
+            var sellerInfo =
+            from user in _context.Users
+            join flat in _context.Flats on user.flatID equals flat.FlatID
+            where user.userUid == userId
+            select new UserInfo
+            {
+                fName = user.fname,
+                lName = user.lname,
+                flatNumber = flat.FlatNumber,
+                phoneNo = user.phoneNo,
+                photoUrl = user.photoUrl,
+                flatId = flat.FlatID,
+                userName = user.userName,
+                userUid = user.userUid,
+                rating = user.rating,
+                apartmentName = flat.apartmentID
+            };
 
+            return sellerInfo.FirstOrDefault();
+        }
         public IEnumerable<User> GetAllUsers()
         {
             try
@@ -528,7 +549,7 @@ namespace NeighborBackend.Data
 
         public OrderDetail GetOrder(String id)
         {
-            var orderSingle = _context.Orders.Where(x=>x.orderID == id).FirstOrDefault();
+            var orderSingle = _context.Orders.Where(x => x.orderID == id).FirstOrDefault();
 
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.sellerItems = GetSellerDetailsForOrder(id);
@@ -552,7 +573,12 @@ namespace NeighborBackend.Data
                 lName = user.lname,
                 flatNumber = flat.FlatNumber,
                 phoneNo = user.phoneNo,
-                photoUrl = user.photoUrl
+                photoUrl = user.photoUrl,
+                flatId = flat.FlatID,
+                userName = user.userName,
+                userUid = user.userUid,
+                rating = user.rating,
+                apartmentName = flat.apartmentID
             };
 
             return sellerInfo.FirstOrDefault();
