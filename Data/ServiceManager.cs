@@ -227,8 +227,9 @@ namespace NeighborBackend.Data
 
         public SellerItemDetail GetSellerItemsByUserId(String userId)
         {
-            var sellerInfo = 
-            from user in _context.Users join flat in _context.Flats on user.flatID equals flat.FlatID
+            var sellerInfo =
+            from user in _context.Users
+            join flat in _context.Flats on user.flatID equals flat.FlatID
             where user.userUid == userId
             select new SellerItemDetail
             {
@@ -508,13 +509,13 @@ namespace NeighborBackend.Data
         public void AddOrder(Order order)
         {
             List<Order> list = new List<Order>();
-            foreach (SellerDetails item in order.sellerItems)
+            foreach (FoodItemDetail item in order.foodItems)
             {
                 Order orderItem = new Order();
                 orderItem.createTime = order.createTime;
                 orderItem.orderID = order.orderID;
                 orderItem.orderStatus = order.orderStatus;
-                orderItem.sellerItemId = item.sellerItemID;
+                orderItem.sellerItemId = item.itemID;
                 orderItem.id = Guid.NewGuid().ToString();
                 orderItem.userPlacedBy = order.userPlacedBy;
                 orderItem.userPlacedTo = order.userPlacedTo;
@@ -525,26 +526,59 @@ namespace NeighborBackend.Data
             _context.SaveChanges();
         }
 
-        public Order GetOrder(String id)
+        public OrderDetail GetOrder(String id)
         {
-            var order = _context.Orders.FirstOrDefault(b => b.orderID == id);
-            List<Order> items = _context.Orders.Where(o => o.orderID == id).ToList();
-            List<SellerDetails> sellerItems = new List<SellerDetails>();
-            foreach (var item in items)
-            {
-                var sellerItem = _context.SellerItems.Where(x => x.SellerItemID == item.sellerItemId).FirstOrDefault();
-                sellerItems.Add(new SellerDetails
-                {
-                    itemName = sellerItem.itemName,
-                    itemDesc = sellerItem.itemDesc,
-                    quantity = item.quantity,
-                    price = sellerItem.price
-                });
-            }
-            order.sellerItems = sellerItems;
-            return order;
+            var orderSingle = _context.Orders.Where(x=>x.orderID == id).FirstOrDefault();
+
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.sellerItems = GetSellerDetailsForOrder(id);
+            orderDetail.orderStatus = orderSingle.orderStatus;
+            orderDetail.endTime = orderSingle.endTime;
+            orderDetail.createTime = orderSingle.createTime;
+            orderDetail.userPlacedBy = GetUserInfo(orderSingle.userPlacedBy);
+            orderDetail.userPlacedTo = GetUserInfo(orderSingle.userPlacedTo);
+            return orderDetail;
         }
 
+        private UserInfo GetUserInfo(String userId)
+        {
+            var sellerInfo =
+            from user in _context.Users
+            join flat in _context.Flats on user.flatID equals flat.FlatID
+            where user.userUid == userId
+            select new UserInfo
+            {
+                fName = user.fname,
+                lName = user.lname,
+                flatNumber = flat.FlatNumber,
+                phoneNo = user.phoneNo,
+                photoUrl = user.photoUrl
+            };
+
+            return sellerInfo.FirstOrDefault();
+        }
+
+        private List<FoodItemDetail> GetSellerDetailsForOrder(String orderId)
+        {
+
+            var query = from order in _context.Orders
+                        join sellerItem in _context.SellerItems on order.sellerItemId equals sellerItem.SellerItemID
+                        where order.orderID == orderId
+                        select
+                        new FoodItemDetail
+                        {
+                            itemName = sellerItem.itemName,
+                            itemDesc = sellerItem.itemDesc,
+                            quantity = order.quantity,
+                            servedFor = sellerItem.servedFor,
+                            available = sellerItem.isAvailable,
+                            price = sellerItem.price,
+                            itemID = sellerItem.SellerItemID
+                        };
+
+            return query.ToList();
+
+        }
         public IEnumerable<OrderHistory> GetOrderbyUser(String id)
         {
             var list = _context.Orders.Where(x => x.userPlacedBy == id).ToList();

@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Order GetOrderDetail(String id)
+        public OrderDetail GetOrderDetail(String id)
         {
             return manager.GetOrder(id);
         }

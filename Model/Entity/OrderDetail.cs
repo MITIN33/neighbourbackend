@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,14 +6,9 @@ using NeighborFoodBackend.Model.Entity;
 
 namespace FoodService.Models
 {
-    public class Order
+    public class OrderDetail
     {
-        
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public String id { get; set; }
-        
-        
+          
         public String orderID
         {
             get;
@@ -26,15 +21,13 @@ namespace FoodService.Models
             set;
         }
 
-        [ForeignKey("User")]
-        public String userPlacedBy
+        public UserInfo userPlacedBy
         {
             get;
             set;
         }
 
-        [ForeignKey("User")]
-        public String userPlacedTo
+        public UserInfo userPlacedTo
         {
             get;
             set;
@@ -47,15 +40,9 @@ namespace FoodService.Models
             set;
         }
 
-        [ForeignKey("SellerItem")]
-        public String sellerItemId { get; set; }
-
-        public int quantity { get; set; }
-
         public String endTime { get; set; }
 
-        [NotMapped]
-        public List<FoodItemDetail> foodItems { get; set; }
+        public List<FoodItemDetail> sellerItems { get; set; }
 
     }
 }
