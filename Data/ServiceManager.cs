@@ -56,7 +56,7 @@ namespace NeighborBackend.Data
                 userName = user.userName,
                 userUid = user.userUid,
                 rating = user.rating,
-                apartmentName = flat.apartmentID
+                apartmentId = flat.apartmentID
             };
 
             return sellerInfo.FirstOrDefault();

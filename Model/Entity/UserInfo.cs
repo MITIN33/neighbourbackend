@@ -45,5 +45,6 @@ namespace FoodService.Models
         public float rating { get; set; }
         public String photoUrl { get; set; }
         public String apartmentName { get; set; }
+        public String apartmentId { get; set; }
     }
 }
