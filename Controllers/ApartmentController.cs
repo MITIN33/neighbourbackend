@@ -38,13 +38,10 @@ namespace WebApplication1.Controllers
         // GET api/values/5
         [Route("{apartmentID}/user/{userID}")]
         [HttpGet]
-        public IEnumerable<SellerItemDetails> GetSellerItemDetailsByApartmentAndUser(String apartmentID,String userID)
+        public IEnumerable<HoodDetail> GetSellerItemDetailsByApartmentAndUser(String apartmentID,String userID)
         {
             return manager.GetSellerItemDetailsByApartmentAndUser(apartmentID,userID);
         }
-
-
-
 
         // POST api/values
         [HttpPost]

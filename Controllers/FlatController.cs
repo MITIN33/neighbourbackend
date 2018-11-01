@@ -40,17 +40,16 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public List<Flat> GetAllFlatsByApartment(String id)
         {
-           return manager.GetAllFlatsForApartment(id);
+            return manager.GetAllFlatsForApartment(id);
 
         }
 
 
-        [Route("seller/{flatID}")]
+        [Route("seller/{userId}")]
         [HttpGet]
-        public IEnumerable<SellerFlat> GetSellerItemsByFlat(String flatID)
+        public SellerItemDetail GetSellerItemsByUserId(String userId)
         {
-            return manager.GetSellerItemsByFlat(flatID);
-
+            return manager.GetSellerItemsByUserId(userId);
         }
 
         // POST api/values

@@ -11,6 +11,7 @@ namespace NeighborFoodBackend.Controllers
     [Route("api/Health")]
     public class HealthController : Controller
     {
+        [HttpGet]
         public String Get()
         {
             return "Service Is Up";

@@ -19,35 +19,49 @@ namespace NeighborFoodBackend.Middleware
 
         public async Task Invoke(HttpContext context)
         {
-            var currentBody = context.Response.Body;
-
-            using (var memoryStream = new MemoryStream())
+            if (context.Request.Path.Value.StartsWith("/api"))
             {
-                //set the current response to the memorystream.
-                context.Response.Body = memoryStream;
 
-                await _next(context);
 
-                //reset the body 
-                context.Response.Body = currentBody;
-                memoryStream.Seek(0, SeekOrigin.Begin);
-                CommonApiResponse result = null;
-                var readToEnd = new StreamReader(memoryStream).ReadToEnd();
-
-                if ((HttpStatusCode)context.Response.StatusCode == HttpStatusCode.OK)
+                var currentBody = context.Response.Body;
+                using (var memoryStream = new MemoryStream())
                 {
-                    var objResult = JsonConvert.DeserializeObject(readToEnd);
-                    result = CommonApiResponse.Create((HttpStatusCode)context.Response.StatusCode, objResult== null ? readToEnd : objResult, null);
+                    //set the current response to the memorystream.
+                    context.Response.Body = memoryStream;
+
+                    await _next(context);
+                    //reset the body 
+                    context.Response.Body = currentBody;
+                    memoryStream.Seek(0, SeekOrigin.Begin); var readToEnd = new StreamReader(memoryStream).ReadToEnd();
+                    try
+                    {
+
+                        CommonApiResponse result = null;
+
+                        if ((HttpStatusCode)context.Response.StatusCode == HttpStatusCode.OK)
+                        {
+                            var objResult = JsonConvert.DeserializeObject(readToEnd);
+                            result = CommonApiResponse.Create((HttpStatusCode)context.Response.StatusCode, objResult == null ? readToEnd : objResult, null);
+                        }
+                        else
+                        {
+                            result = CommonApiResponse.Create((HttpStatusCode)context.Response.StatusCode, null, readToEnd);
+                        }
+                        context.Response.ContentType = "application/json";
+                        await context.Response.WriteAsync(JsonConvert.SerializeObject(result));
+                    }
+                    catch (System.Exception)
+                    {
+                        await _next(context);
+                    }
                 }
-                else
-                {
-                    result = CommonApiResponse.Create((HttpStatusCode)context.Response.StatusCode, null, readToEnd);
-                }
-                context.Response.ContentType = "application/json";
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(result));
             }
-        }
+            else
+            {
+                await _next(context);
+            }
 
+        }
     }
 
     public static class ResponseWrapperExtensions

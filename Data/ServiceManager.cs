@@ -134,43 +134,44 @@ namespace NeighborBackend.Data
 
 
 
-        public IEnumerable<SellerItemDetails> GetSellerItemDetailsByApartmentAndUser(String apartmentID, String userId)
+        public IEnumerable<HoodDetail> GetSellerItemDetailsByApartmentAndUser(String apartmentID, String userId)
         {
-            List<SellerItemDetails> sellerItemDetails = new List<SellerItemDetails>();
-            var userList = _context.Users.Where(x => x.apartmentID == apartmentID).ToList();
+            List<HoodDetail> sellerItemDetails = new List<HoodDetail>();
+            var userList = _context.Users.Where(x => x.apartmentID == apartmentID && x.userUid != userId).ToList();
             foreach (var user in userList)
             {
-                if (user.userUid != userId)
+                var foodlist = getSellerItemsForFlat(user.userUid).ToList();
+                if (foodlist.Count != 0)
                 {
-                    var foodlist = getSellerItemsForFlat(user.userUid).ToList();
-                    if (foodlist.Count != 0)
+                    Flat flat = _context.Flats.Where(x => x.FlatID == user.flatID).FirstOrDefault();
+                    Apartment apartment = _context.Apartments.Where(x => x.apartmentID == apartmentID).FirstOrDefault();
+                    HoodDetail sellerItem = new HoodDetail()
                     {
-                        SellerItemDetails sellerItem = new SellerItemDetails()
-                        {
-                            FoodItems = foodlist,
-                            flatNumber = _context.Flats.Where(x => x.FlatID == user.flatID).FirstOrDefault().FlatNumber,
-                            rating = user.rating,
-                            sellerName = user.fname + " " + user.lname,
-                            SellerId = user.userUid,
-                            PhotoUrl = user.photoUrl
-                        };
-                        sellerItemDetails.Add(sellerItem);
-                    }
+                        foodItems = foodlist,
+                        flatNumber = flat.FlatNumber,
+                        flatId = flat.FlatID,
+                        rating = user.rating,
+                        apartmentName = apartment.apartmentName,
+                        sellerName = user.fname + " " + user.lname,
+                        sellerId = user.userUid,
+                        photoUrl = user.photoUrl
+                    };
+                    sellerItemDetails.Add(sellerItem);
                 }
             }
+
 
             return sellerItemDetails;
         }
 
 
-        public IEnumerable<FoodItem> getSellerItemsForFlat(String userID)
+        public IEnumerable<String> getSellerItemsForFlat(String userID)
         {
             var foods = from sellerItem in _context.SellerItems
                         where sellerItem.sellerID == userID && sellerItem.isAvailable
-                        select new FoodItem { itemName = sellerItem.itemName, itemDesc = sellerItem.itemDesc };
+                        select sellerItem.itemName;
 
             return foods;
-
         }
 
         public long DeleteApartment(String id)
@@ -224,25 +225,38 @@ namespace NeighborBackend.Data
             return Flats;
         }
 
-
-        public IEnumerable<SellerFlat> GetSellerItemsByFlat(String flatID)
+        public SellerItemDetail GetSellerItemsByUserId(String userId)
         {
-            var innerJoinQuery =
-            from sellerItem in _context.SellerItems
-            join item in _context.FoodItems on sellerItem.itemID equals item.itemID
-            where sellerItem.flatID == flatID
-            select new SellerFlat
+            var sellerInfo = 
+            from user in _context.Users join flat in _context.Flats on user.flatID equals flat.FlatID
+            where user.userUid == userId
+            select new SellerItemDetail
             {
-                isAvailable = sellerItem.isAvailable,
-                itemID = sellerItem.itemID,
-                itemName = item.itemName,
-                quantity = sellerItem.quantity,
+                foodItemDetail = GetItemsByUserId(userId),
+                fName = user.fname,
+                lName = user.lname,
+                flatNumber = flat.FlatNumber,
+                sellerId = user.userUid
+            };
+
+            return sellerInfo.FirstOrDefault();
+        }
+
+        private IEnumerable<FoodItemDetail> GetItemsByUserId(String userID)
+        {
+            var sellerItemList =
+            from sellerItem in _context.SellerItems
+            where sellerItem.sellerID == userID
+            select new FoodItemDetail
+            {
+                itemID = sellerItem.SellerItemID,
+                itemName = sellerItem.itemName,
                 servedFor = sellerItem.servedFor,
-                sellerID = sellerItem.sellerID,
+                itemDesc = sellerItem.itemDesc,
                 price = sellerItem.price
             }; //produces flat sequence
 
-            return innerJoinQuery;
+            return sellerItemList.ToList();
 
         }
         public List<Flat> GetAllFlatsForApartment(String apartmentID)
@@ -417,7 +431,7 @@ namespace NeighborBackend.Data
 
         public Boolean toggleAvailability(String userID, Boolean value)
         {
-            List<SellerItem> sellerItems = _context.SellerItems.Where(x=>x.sellerID == userID).ToList();
+            List<SellerItem> sellerItems = _context.SellerItems.Where(x => x.sellerID == userID).ToList();
             foreach (var item in sellerItems)
             {
                 item.isAvailable = value;
@@ -513,12 +527,13 @@ namespace NeighborBackend.Data
         public Order GetOrder(String id)
         {
             var order = _context.Orders.FirstOrDefault(b => b.orderID == id);
-            List<Order> items = _context.Orders.Where(o => o.orderID == id).ToList(); 
+            List<Order> items = _context.Orders.Where(o => o.orderID == id).ToList();
             List<SellerDetails> sellerItems = new List<SellerDetails>();
             foreach (var item in items)
             {
-                var sellerItem = _context.SellerItems.Where(x=>x.SellerItemID == item.sellerItemId).FirstOrDefault();
-                sellerItems.Add(new SellerDetails{
+                var sellerItem = _context.SellerItems.Where(x => x.SellerItemID == item.sellerItemId).FirstOrDefault();
+                sellerItems.Add(new SellerDetails
+                {
                     itemName = sellerItem.itemName,
                     itemDesc = sellerItem.itemDesc,
                     quantity = item.quantity,
@@ -576,7 +591,7 @@ namespace NeighborBackend.Data
                           };
 
             finalList.AddRange(orders2.ToList());
-            finalList = finalList.GroupBy(x=>x.orderId).Select(n=>n.First()).ToList();
+            finalList = finalList.GroupBy(x => x.orderId).Select(n => n.First()).ToList();
             return finalList.OrderByDescending(x => x.createTime);
         }
 

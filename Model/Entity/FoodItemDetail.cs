@@ -3,8 +3,11 @@ namespace NeighborFoodBackend.Model.Entity
 {
     public class FoodItemDetail
     {
-        public String sellerItemID { get; set; }
-        public int quantity { get; set; }
+        public String itemID { get; set; }
+        public String itemName { get; set; }
+        public int servedFor { get; set; }
+        public String itemDesc { get; set; }
+        public float price { get; set; }
         
     }
 }
