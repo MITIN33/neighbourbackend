@@ -8,6 +8,7 @@ namespace NeighborFoodBackend.Model.Entity
         public int servedFor { get; set; }
         public String itemDesc { get; set; }
         public float price { get; set; }
+        public Boolean available { get; set; }
         
     }
 }

@@ -253,7 +253,8 @@ namespace NeighborBackend.Data
                 itemName = sellerItem.itemName,
                 servedFor = sellerItem.servedFor,
                 itemDesc = sellerItem.itemDesc,
-                price = sellerItem.price
+                price = sellerItem.price,
+                available = sellerItem.isAvailable
             }; //produces flat sequence
 
             return sellerItemList.ToList();
