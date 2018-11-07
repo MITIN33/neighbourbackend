@@ -85,6 +85,8 @@ namespace NeighborBackend.Data
             if (userNew != null)
             {
                 userNew.photoUrl = user.photoUrl;
+                userNew.fname = user.fname;
+                userNew.lname = user.lname;
             }
             _context.SaveChanges();
             return userID;
