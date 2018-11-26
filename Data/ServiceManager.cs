@@ -654,7 +654,17 @@ namespace NeighborBackend.Data
                           };
 
             finalList.AddRange(orders2.ToList());
-            finalList = finalList.GroupBy(x => x.orderId).Select(n => n.First()).ToList();
+            finalList = finalList.GroupBy(x => x.orderId).Select(n => new OrderHistory
+            {
+                orderId = n.First().orderId,
+                orderStatus =n.First().orderStatus,
+                orderType = n.First().orderType,
+                sellerName = n.First().sellerName,
+                totalBill = n.Sum(b=>b.totalBill),
+                flatNumber = n.First().flatNumber,
+                createTime = n.First().createTime,
+                endTime =n.First().endTime
+            }).ToList();
             return finalList.OrderByDescending(x => x.createTime);
         }
 
