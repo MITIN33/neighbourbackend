@@ -532,6 +532,13 @@ namespace NeighborBackend.Data
         public void AddOrder(Order order)
         {
             List<Order> list = new List<Order>();
+            var orderList = _context.Orders.Where(x=>x.userPlacedBy == order.userPlacedBy && x.userPlacedTo == order.userPlacedTo).FirstOrDefault();
+            
+            if(orderList != null)
+            {
+                throw new Exception("Can not place more than 1 order to one user at a time.");
+            }
+            
             foreach (FoodItemDetail item in order.foodItems)
             {
                 Order orderItem = new Order();
@@ -677,14 +684,14 @@ namespace NeighborBackend.Data
         public long UpdateOrder(String id, String orderStatus)
         {
             int orderID = 0;
-            var orderNew = _context.Orders.Where(x => x.orderID == id).FirstOrDefault();
+            var orderNew = _context.Orders.Where(x => x.orderID == id).ToList();
             TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
             long epochTime = (long)t.TotalMilliseconds;
-            if (orderNew != null)
+            foreach (var order in orderNew)
             {
-                orderNew.orderStatus = orderStatus;
-                orderNew.endTime = epochTime.ToString();
-                orderID = _context.SaveChanges();
+                    order.orderStatus = orderStatus;
+                    order.endTime = epochTime.ToString();
+                    orderID = _context.SaveChanges();
             }
             return orderID;
         }
