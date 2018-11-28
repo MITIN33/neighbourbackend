@@ -532,7 +532,7 @@ namespace NeighborBackend.Data
         public void AddOrder(Order order)
         {
             List<Order> list = new List<Order>();
-            var orderList = _context.Orders.Where(x=>x.userPlacedBy == order.userPlacedBy && x.userPlacedTo == order.userPlacedTo && (x.orderStatus != "COMPLETED" && x.orderStatus != "CANCELLED").FirstOrDefault();
+            var orderList = _context.Orders.Where(x=>x.userPlacedBy == order.userPlacedBy && x.userPlacedTo == order.userPlacedTo && (x.orderStatus != "COMPLETED" && x.orderStatus != "CANCELLED")).FirstOrDefault();
             
             if(orderList != null)
             {
