@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -28,11 +29,18 @@ namespace WebApplication1
              {
                  options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
              });
+
+            // configure basic authentication 
+            services.AddAuthentication("FireBaseAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, FirebaseAuthenticationHandler>("FireBaseAuthentication", null);
+
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
             });
+
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,8 +51,10 @@ namespace WebApplication1
                 app.UseDeveloperExceptionPage();
             }
             app.UseResponseWrapper();
+            
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
+            app.UseAuthentication();
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
             // specifying the Swagger JSON endpoint.
@@ -52,6 +62,7 @@ namespace WebApplication1
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
+
             app.UseMvc();
         }
     }

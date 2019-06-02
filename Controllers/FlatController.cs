@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using FoodService.Models;
 using Microsoft.AspNetCore.Mvc;
 using NeighborBackend.Data;
-using NeighborFoodBackend;
 using WebApplication1.Data;
 using NeighborFoodBackend.Model.Entity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
+
+    [Authorize]
     [Route("api/[controller]")]
     public class FlatController : Controller
     {
