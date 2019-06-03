@@ -8,9 +8,12 @@ using NeighborBackend.Data;
 using NeighborFoodBackend;
 using WebApplication1.Data;
 using NeighborFoodBackend.Model.Entity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
+
+    [Authorize]
     [Route("api/[controller]")]
     public class UserNotificationController : Controller
     {

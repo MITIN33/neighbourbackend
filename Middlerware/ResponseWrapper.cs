@@ -21,8 +21,6 @@ namespace NeighborFoodBackend.Middleware
         {
             if (context.Request.Path.Value.StartsWith("/api"))
             {
-
-
                 var currentBody = context.Response.Body;
                 using (var memoryStream = new MemoryStream())
                 {
@@ -32,20 +30,27 @@ namespace NeighborFoodBackend.Middleware
                     await _next(context);
                     //reset the body 
                     context.Response.Body = currentBody;
-                    memoryStream.Seek(0, SeekOrigin.Begin); var readToEnd = new StreamReader(memoryStream).ReadToEnd();
+                    memoryStream.Seek(0, SeekOrigin.Begin);
+                    var readToEnd = new StreamReader(memoryStream).ReadToEnd();
                     try
                     {
-
                         CommonApiResponse result = null;
+                        HttpStatusCode statusCode = (HttpStatusCode)context.Response.StatusCode;
 
-                        if ((HttpStatusCode)context.Response.StatusCode == HttpStatusCode.OK)
+                        switch (statusCode)
                         {
-                            var objResult = JsonConvert.DeserializeObject(readToEnd);
-                            result = CommonApiResponse.Create((HttpStatusCode)context.Response.StatusCode, objResult == null ? readToEnd : objResult, null);
-                        }
-                        else
-                        {
-                            result = CommonApiResponse.Create((HttpStatusCode)context.Response.StatusCode, null, readToEnd);
+                            case HttpStatusCode.BadRequest:
+                                break;
+                            case HttpStatusCode.OK:
+                                var objResult = JsonConvert.DeserializeObject(readToEnd);
+                                result = CommonApiResponse.Create((HttpStatusCode)context.Response.StatusCode, objResult == null ? readToEnd : objResult, null);
+                                break;
+                            case HttpStatusCode.Unauthorized:
+                                result = CommonApiResponse.Create((HttpStatusCode)context.Response.StatusCode, "Authorization failed for the request.", "Unauthorization Access.");
+                                break;
+                            default:
+                                result = CommonApiResponse.Create((HttpStatusCode)context.Response.StatusCode, null, readToEnd);
+                                break;
                         }
                         context.Response.ContentType = "application/json";
                         await context.Response.WriteAsync(JsonConvert.SerializeObject(result));
