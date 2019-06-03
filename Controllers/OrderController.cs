@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using FoodService.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +26,11 @@ namespace WebApplication1.Controllers
             return manager.GetOrder(id);
         }
 
-
+        /// <summary>
+        /// Get the list of all the orders for the user.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("user/{id}")]
         public IActionResult GetOrderByBuyerUser(String id)
         {

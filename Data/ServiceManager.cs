@@ -288,6 +288,7 @@ namespace NeighborBackend.Data
         {
             var Flats = _context.Flats
                                 .Where(s => s.apartmentID == apartmentID)
+                                .OrderBy(x=>x.FlatNumber)
                                 .ToList();
             return Flats;
         }
